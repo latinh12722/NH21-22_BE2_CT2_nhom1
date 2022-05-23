@@ -47,7 +47,7 @@ class Product_detail extends Controller
         if (count($product) > 0) {
             return view('customer.product',['product'=>$product[0]]);
         }
-        return view('errors.illustrated-layout');
+        // return view('errors.illustrated-layout');
     }
 
     /**
