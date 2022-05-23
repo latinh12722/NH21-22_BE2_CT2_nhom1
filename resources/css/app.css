@@ -1,3 +1,8 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+@import 'primevue/resources/primevue.css';
+@import 'primevue/resources/themes/lara-light-indigo/theme.css';
+@import 'primeflex/primeflex.css';
+@import 'primeicons/primeicons.css';

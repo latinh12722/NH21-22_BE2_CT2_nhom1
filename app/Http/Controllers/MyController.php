@@ -18,7 +18,7 @@ class MyController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('index',['data'=>$products]);
+        return view('customer.index',['data'=>$products]);
     }
     function getAllproducts(){
         

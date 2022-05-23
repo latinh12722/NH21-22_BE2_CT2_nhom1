@@ -14,15 +14,15 @@ class Store extends Controller
     {
         $data = Product::where('manu_id', $manu_id)->get();
         $protypes = Protype::all();
-        return view('store', ['data' => $data]);
+        return view('customer.store', ['data' => $data]);
     }
     function show_typeid($type_id)
     {
         $data = Product::where('type_id', $type_id)->get();
         if (count(Protype::where('type_id', $type_id)->get()) > 0) {
-            return view('store', ['data' => $data]);
+            return view('customer.store', ['data' => $data]);
         }
-        return view('errors.illustrated-layout');
+        // return view('errors.illustrated-layout');
     }
     /**
      * Display a listing of the resource.
@@ -32,7 +32,7 @@ class Store extends Controller
     public function index()
     {
         $data = Product::all();
-        return view('store', ['data' => $data]);
+        return view('customer.store', ['data' => $data]);
     }
 
     /**

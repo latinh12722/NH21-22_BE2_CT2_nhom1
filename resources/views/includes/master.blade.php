@@ -50,7 +50,7 @@
                 </ul>
                 <ul class="header-links pull-right">
                     <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-                    <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
+                    <li><a href="{{url('login')}}"><i class="fa fa-user-o"></i> My Account</a></li>
                 </ul>
             </div>
         </div>
@@ -172,7 +172,7 @@
             <div id="responsive-nav">
                 <!-- NAV -->
                 <ul class="main-nav nav navbar-nav">
-                    <li class=""><a href="">Home</a></li>
+                    <li class="active"><a href="{{url('')}}">Home</a></li>
                     <!-- active -->
                     @foreach((new \App\Helpers\Helper)->getAllProtypes() as $value)
                     <li><a href="/store/type/{{$value->type_id}}">{{$value->type_Name}}</a></li>
@@ -275,7 +275,7 @@
                         <div class="footer">
                             <h3 class="footer-title">Service</h3>
                             <ul class="footer-links">
-                                <li><a href="#">My Account</a></li>
+                                <li><a href="http://127.0.0.1:8000/login">My Account</a></li>
                                 <li><a href="#">View Cart</a></li>
                                 <li><a href="#">Wishlist</a></li>
                                 <li><a href="#">Track My Order</a></li>
