@@ -206,15 +206,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="./products_add.php" class="nav-link )">
+                                    <a href="{{url('admin/products')}}" class="nav-link )">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Add Product</p>
+                                        <p>Products</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="./products.php" class="nav-link )">
+                                    <a href="{{url('admin/products/add')}}" class="nav-link )">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Edit Product</p>
+                                        <p>Add Product</p>
                                     </a>
                                 </li>
                             </ul>

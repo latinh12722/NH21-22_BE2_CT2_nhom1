@@ -119,8 +119,7 @@
 
                     <ul class="product-links">
                         <li>Category:</li>
-                        <li><a href="#">Headphones</a></li>
-                        <li><a href="#">Accessories</a></li>
+                        <li><a href="{{url('store/manu/'.$product->manu_id)}}">{{ $product->manufacture->manu_name}}</a></li>
                     </ul>
 
                     <ul class="product-links">

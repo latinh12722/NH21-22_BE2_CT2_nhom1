@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyController;
 use App\Http\Controllers\CartController;
@@ -39,7 +40,13 @@ Route::prefix('product')->group(function () {
 Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], function () {
     Route::get('', function () {
         return view('admin.index');
+    })->name('admin');
+    Route::prefix('products')->group(function () {
+        Route::get('', [AdminController::class, 'index']);
+        Route::get('/add', [AdminController::class, 'show_add_product']);
+        Route::get('/edit/{product_id}', [AdminController::class, 'show_edit_product']);
     });
+    
 });
 
 Route::get('/send', [MyController::class, 'sendMail'])->name('send.mail');
