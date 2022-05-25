@@ -1,4 +1,4 @@
-@include('includes.header')
+@extends('customer.includes.master')
 
 <!-- BREADCRUMB -->
 <div id="breadcrumb" class="section">

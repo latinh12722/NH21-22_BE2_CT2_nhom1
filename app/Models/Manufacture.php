@@ -10,7 +10,7 @@ class Manufacture extends Model
     use HasFactory;
     protected $primaryKey = 'manu_id';
     public $timetamps = false;
-    function product_manu()
+    function product()
     {
         return $this->hasMany(Product::class,'manu_id','manu_id');
     }

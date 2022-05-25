@@ -1,4 +1,4 @@
-@include('includes.header')
+@include('customer.includes.header')
 <!-- BREADCRUMB -->
 <div id="breadcrumb" class="section">
 	<!-- container -->

@@ -32,7 +32,12 @@ class Product_detail extends Controller
     {
         //
     }
-
+    public function getproduct(Request $request)
+    {
+        $id = $request->get('productId');
+        $product = Product::where('product_id',$id)->first();
+        return $product;
+    }
     /**
      * Display the specified resource.
      *

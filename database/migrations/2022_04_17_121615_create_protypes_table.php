@@ -15,7 +15,7 @@ class CreateProtypesTable extends Migration
     {
         Schema::create('protypes', function (Blueprint $table) {
             $table->increments('type_id');
-            $table->string('type_Name',500);
+            $table->string('type_name',1000);
         });
     }
 

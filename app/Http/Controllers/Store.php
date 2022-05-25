@@ -12,17 +12,16 @@ class Store extends Controller
 
     function show_manuid($manu_id)
     {
-        $data = Product::where('manu_id', $manu_id)->get();
-        $protypes = Protype::all();
-        return view('customer.store', ['data' => $data]);
+        $data['products'] = Product::where('manu_id', $manu_id)->Paginate(9);
+        return view('customer.store', $data);
     }
     function show_typeid($type_id)
     {
-        $data = Product::where('type_id', $type_id)->get();
+        $data['products'] = Product::where('type_id', $type_id)->Paginate(9);
         if (count(Protype::where('type_id', $type_id)->get()) > 0) {
-            return view('customer.store', ['data' => $data]);
+            return view('customer.store', $data);
         }
-        // return view('errors.illustrated-layout');
+        return view('errors.illustrated-layout');
     }
     /**
      * Display a listing of the resource.
@@ -31,8 +30,8 @@ class Store extends Controller
      */
     public function index()
     {
-        $data = Product::all();
-        return view('customer.store', ['data' => $data]);
+        $data['products'] = Product::Paginate(9);
+        return view('customer.store', $data);
     }
 
     /**

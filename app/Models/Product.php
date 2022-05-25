@@ -10,11 +10,11 @@ class Product extends Model
     protected $primaryKey = 'product_id';
 
     use HasFactory;
-    function manu_product()
+    function manufacture()
     {
         return $this->belongsTo(Manufacture::class, 'manu_id');
     }
-    function type_product()
+    function protype()
     {
         return $this->belongsTo(Protype::class, 'type_id');
     }

@@ -1,6 +1,5 @@
-@extends('includes.master')
+@extends('customer.includes.master')
 @section('content')
-<!-- {{ (new \App\Helpers\Helper)->getnumber() }} -->
 <!-- BREADCRUMB -->
 <div id="breadcrumb" class="section">
     <!-- container -->
@@ -11,9 +10,9 @@
                 <ul class="breadcrumb-tree">
                     <li><a href="#">Home</a></li>
                     <li><a href="{{url('store')}}">All Categories</a></li>
-                    <li><a href="http://127.0.0.1:8000/store/manu/{{$product->manu_product->manu_id}}">{{ $product->manu_product->manu_Name}}</a></li>
-                    <li><a href="http://127.0.0.1:8000/store/type/{{$product->type_product->type_id}}">{{$product->type_product->type_Name}}</a></li>
-                    <li class="active">{{$product->product_Name}}</li>
+                    <li><a href="{{url('store/manu/'.$product->manu_id)}}">{{ $product->manufacture->manu_name}}</a></li>
+                    <li><a href="{{url('store/type/'.$product->type_id)}}">{{$product->protype->type_name}}</a></li>
+                    <li class="active">{{$product->product_name}}</li>
                 </ul>
             </div>
         </div>
@@ -78,7 +77,7 @@
                 <div class="product-details">
 
 
-                    <h2 class="product-name"> {{$product->product_Name}}</h2>
+                    <h2 class="product-name"> {{$product->product_name}}</h2>
                     <div>
                         <div class="product-rating">
                             <i class="fa fa-star"></i>
@@ -90,38 +89,28 @@
                         <a class="review-link" href="#">10 Review(s) | Add your review</a>
                     </div>
                     <div>
-                        <h3 class="product-price"> {{$product->product_Price}}</h3>
+                        <h3 class="product-price">{{number_format($product->product_price-$product->product_price*$product->product_sale/100)}}đ
+                            <del class="product-old-price">{{number_format($product->product_price)}}đ</del>
+                        </h3>
                         <span class="product-available">In Stock</span>
                     </div>
-                    <p>{{$product->product_description}}</p>
+                    <p>{{substr($product->product_description,0,100)."..."}}</p>
 
-                    <div class="product-options">
-                        <label>
-                            Size
-                            <select class="input-select">
-                                @for ($i=1; $i < 10; $i++) <option value="{{$i}}">{{$i}}</option>
-                                    @endfor
-                            </select>
-                        </label>
-                        <label>
-                            Color
-                            <select class="input-select">
-                                <option value="0">RED</option>
-                            </select>
-                        </label>
-                    </div>
-
-                    <div class="add-to-cart">
-                        <div class="qty-label">
-                            Qty
-                            <div class="input-number">
-                                <input type="number">
-                                <span class="qty-up">+</span>
-                                <span class="qty-down">-</span>
+                    <form action="{{ url('add-to-card') }}" method="POST">
+                        @csrf
+                        <div class="add-to-cart">
+                            <div class="qty-label">
+                                Qty
+                                <div class="input-number">
+                                    <input type="number" value="1" name="quantity">
+                                    <span class="qty-up">+</span>
+                                    <span class="qty-down">-</span>
+                                </div>
                             </div>
+                            <input type="hidden" name="product_id" value="{{$product->product_id}}">
+                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
                         </div>
-                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                    </div>
+                    </form>
 
                     <ul class="product-btns">
                         <li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
@@ -173,7 +162,7 @@
                         <div id="tab2" class="tab-pane fade in">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                    <p>{{$product->product_description}}</p>
                                 </div>
                             </div>
                         </div>
@@ -398,8 +387,12 @@
                     </div>
                     <div class="product-body">
                         <p class="product-category">Category</p>
-                        <h3 class="product-name" style="margin: auto 0 ;width: auto; height: 40px;"><a href="http://127.0.0.1:8000/product/{{$value->product_id}}">{{$value->product_Name}}</a></h3>
-                        <h4 class="product-price">{{number_format($value->product_Price-$value->product_Price*$value->product_sale/100)}}đ <del class="product-old-price">{{number_format($value->product_Price)}}đ</del></h4>
+                        <h3 class="product-name" style="margin: auto 0 ;width: auto; height: 40px;">
+                            <a href="http://127.0.0.1:8000/product/{{$value->product_id}}">{{$value->product_name}}</a>
+                        </h3>
+                        <h4 class="product-price">{{number_format($value->product_price-$value->product_price*$value->product_sale/100)}}đ
+                            <del class="product-old-price">{{number_format($value->product_price)}}đ</del>
+                        </h4>
                         <div class="product-rating">
                         </div>
                         <div class="product-btns">
@@ -409,7 +402,14 @@
                         </div>
                     </div>
                     <div class="add-to-cart">
-                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                        <form action="{{ url('add-to-card') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $value->product_id }}">
+                            <input type="hidden" name="quantity" value="1">
+                            <div class="add-to-cart">
+                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

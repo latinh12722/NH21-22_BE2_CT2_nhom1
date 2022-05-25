@@ -1,4 +1,4 @@
-@extends('includes.master')
+@extends('customer.includes.master')
 @section('content')
 <!-- SECTION -->
 <div class="section">

@@ -26,13 +26,47 @@ class AuthenticatedSessionController extends Controller
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
+    protected function redirectTo()
+    {
+        if (isset(Auth::user()->role)) {
+            if (Auth::user()->role == 1) {
+                return redirect()->intended(RouteServiceProvider::ADMIN);
+            } else {
+                return redirect()->intended(RouteServiceProvider::HOME);
+            }
+        } else {
+            return view('auth.login');
+        }
+    }
+    public function AuthLogin(Request $request)
+    {
+        $input = $request->all();
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+        if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
+            if (auth()->user()->role == 1) {
+                return redirect()->route('admin.index')->with('error', 'Email and password are wrong');
+            } else {
+                return redirect()->route('index');
+            }
+        } else {
+            return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors([
+        'approve' => 'Wrong password or this account not approved yet.',
+    ]);
+        }
+    }
     public function store(LoginRequest $request)
     {
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        return redirect()->intended(RouteServiceProvider::HOME);
+        if (Auth::user()->role == 1) {
+            return redirect()->intended(RouteServiceProvider::ADMIN);
+        } else {
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }
     }
 
     /**

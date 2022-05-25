@@ -1,4 +1,5 @@
 <x-app-layout>
+    <meta http-equiv="refresh" content="0;url={{url('')}}">
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}

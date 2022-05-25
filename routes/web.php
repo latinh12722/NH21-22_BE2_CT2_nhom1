@@ -1,8 +1,9 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\Product_detail;
-use App\Http\Controllers\SendMail;
 use App\Http\Controllers\Store;
 
 /*
@@ -18,25 +19,30 @@ use App\Http\Controllers\Store;
 
 Route::get('/', function () {
     return view('customer.index');
-});
+})->name('index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
-
-
-
-Route::prefix('store')->group(function(){
-    Route::get('/',[Store::class,'index'])->name('store');
-    Route::get('/manu/{manu_id}',[Store::class,'show_manuid']);
-    Route::get('/type/{type_id}',[Store::class,'show_typeid']);
+Route::prefix('store')->group(function () {
+    Route::get('/', [Store::class, 'index'])->name('store');
+    Route::get('/manu/{manu_id}', [Store::class, 'show_manuid']);
+    Route::get('/type/{type_id}', [Store::class, 'show_typeid']);
 });
-Route::prefix('product')->group(function(){
-    Route::get('/{id}',[Product_detail::class,'show']);
+Route::prefix('product')->group(function () {
+    Route::get('/{id}', [Product_detail::class, 'show']);
 });
-Route::get('/send',[MyController::class,'sendMail'])->name('send.mail');
 
+Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], function () {
+    Route::get('', function () {
+        return view('admin.index');
+    });
+});
 
+Route::get('/send', [MyController::class, 'sendMail'])->name('send.mail');
+
+Route::post('/add-to-card', [CartController::class, 'addtocard']);
+Route::get('/remove-card/{id}', [CartController::class, 'removecard']);

@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Product;
 use App\Models\Manufacture;
 use App\Models\Protype;
 use App\Mail\SendMail;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+
 
 class MyController extends Controller
 {
@@ -18,10 +21,10 @@ class MyController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('customer.index',['data'=>$products]);
+        return view('customer.index', ['data' => $products]);
     }
-    function getAllproducts(){
-        
+    function getAllproducts()
+    {
     }
 
     /**
@@ -53,7 +56,6 @@ class MyController extends Controller
      */
     public function show($id)
     {
-        echo $id;
         return view('store');
     }
 
@@ -99,4 +101,6 @@ class MyController extends Controller
         Mail::to($request->email)->send(new SendMail());
         return redirect()->back()->with('success', 'Email Sent!');
     }
+
+    
 }

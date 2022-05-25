@@ -15,7 +15,7 @@ class CreateManufacturesTable extends Migration
     {
         Schema::create('manufactures', function (Blueprint $table) {
             $table->increments('manu_id');
-            $table->string('manu_Name',500);
+            $table->string('manu_name',1000);
         });
     }
 
