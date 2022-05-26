@@ -6,10 +6,12 @@ use App\Models\Product;
 use App\Models\Manufacture;
 use App\Models\Protype;
 use App\Mail\SendMail;
+use App\Models\User;
+use App\Models\Wishlists;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 
 class MyController extends Controller
 {
@@ -102,5 +104,12 @@ class MyController extends Controller
         return redirect()->back()->with('success', 'Email Sent!');
     }
 
-    
+    function addwishlist($product_id){
+        if(Auth::check()){
+            $wishlist = new Wishlists;
+            $wishlist->product_id = $product_id;
+            User::find(Auth::user()->id)->wishlists()->save($wishlist);
+        }
+        return redirect()->back();
+    }
 }

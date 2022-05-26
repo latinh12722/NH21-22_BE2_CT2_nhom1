@@ -79,20 +79,18 @@ class Helper
         $url = explode("/", $url);
 
         $count_arr = count($url);
-        
+
         $url = $url[$count_arr - 1];
         if (!ctype_digit($url)) {
             return -1;
-        }
-        else{
+        } else {
             return $url;
         }
-
     }
     function return_active_navbar($type_id, $url)
     {
         $key = (new \App\Helpers\Helper)->getvalue_url($url);
-        if ($key == $type_id){
+        if ($key == $type_id) {
             return 'active';
         }
     }
@@ -101,15 +99,23 @@ class Helper
         $cardCollection = \Gloudemans\Shoppingcart\Facades\Cart::getContent();
         return $cardCollection->toArray();
     }
-    function getproductbyid($id){
-        return Product::where('product_id',$id)->first();
+    function getproductbyid($id)
+    {
+        return Product::where('product_id', $id)->first();
     }
-    function total_arraycard(){
+    function total_arraycard()
+    {
         $cardCollection = \Gloudemans\Shoppingcart\Facades\Cart::getContent();
         $tong = 0;
-        foreach($cardCollection as $value){
+        foreach ($cardCollection as $value) {
             $tong += $value->price * $value->quantity;
         }
         return $tong;
+    }
+    function selected_combobox($id_product, $id)
+    {
+        if ($id_product  == $id) {
+            echo 'selected';
+        }
     }
 }

@@ -387,9 +387,6 @@
     <script src="{{asset('js/jquery.zoom.min.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
     <script src="{{asset('js/ajax.js')}}"></script>
-    <script>
-        
-    </script>
 </body>
 
 </html>

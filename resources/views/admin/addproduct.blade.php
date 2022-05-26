@@ -10,10 +10,13 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1>Project Add</h1>
+                    @if (session('status'))
+                    <span style="background-color: #ffc107;border-radius: 50px; padding: 3px;">{{session('status')}}</span>
+                    @endif
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{url('/admin')}}">Home</a></li>
                         <li class="breadcrumb-item active">Add Product</li>
                     </ol>
                 </div>
@@ -23,8 +26,8 @@
 
     <!-- Main content -->
     <section class="content">
-        <form action="upload.php" method="post" enctype="multipart/form-data">
-
+        <form action="{{url('admin/products/add-product')}}" method="post" enctype="multipart/form-data">
+            @csrf
             <div class="row">
                 <div class="col-md">
                     <div class="card card-primary">
@@ -64,7 +67,7 @@
                             </div>
                             <div>
                                 <label for="sale">Sale (between 0 and 100):</label>
-                                <input type="number" id="sale" name="sale" min="0" max="100"><br><br>
+                                <input type="number" id="sale" name="sale" min="0" max="100" required><br><br>
                             </div>
                             <div class="form-group">
                                 <label for="inputName">Price</label>
@@ -96,7 +99,7 @@
             <div class="row">
                 <div class="col-12">
                     <a href="#" class="btn btn-secondary">Cancel</a>
-                    <input type="submit" name="submit_product" value="Create new Porject" class="btn btn-success float-right">
+                    <input type="submit" name="submit_product" value="Create new Product" class="btn btn-success float-right">
                 </div>
             </div>
         </form>

@@ -37,4 +37,10 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    function wishlists()
+    {
+        return $this->hasMany(Wishlists::class,'id');
+    }
 }

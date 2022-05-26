@@ -11,11 +11,10 @@ var span = document.getElementsByClassName("close")[0];
 
 arraybtn.forEach(element => {
     element.onclick = function () {
-        setvaluemodal(element.dataset.productId)
+        setvaluemodal(element.dataset.productId, this.dataset.url)
     }
 });
-async function setvaluemodal(product_id) {
-    const url = './api/product/show';
+async function setvaluemodal(product_id,url) {
     const data = { productId: product_id };
     const token = document.querySelector('meta[name=csrf-token]').getAttribute('content');
     const response = await fetch(url, {

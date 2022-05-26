@@ -41,15 +41,35 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], functio
     Route::get('', function () {
         return view('admin.index');
     })->name('admin');
+
     Route::prefix('products')->group(function () {
-        Route::get('', [AdminController::class, 'index']);
+        Route::get('', [AdminController::class, 'show_products'])->name('products');
         Route::get('/add', [AdminController::class, 'show_add_product']);
         Route::get('/edit/{product_id}', [AdminController::class, 'show_edit_product']);
+        Route::post('/add-product', [AdminController::class, 'add_product']);
+        Route::post('/edit-product', [AdminController::class, 'edit_product']);
+        Route::get('/delete-product/{id}', [AdminController::class, 'delete_product']);
     });
-    
+    Route::prefix('protypes')->group(function () {
+        Route::get('', [AdminController::class, 'show_protypes'])->name('protypes');
+        Route::get('/add', [AdminController::class, 'show_add_protype']);
+        Route::get('/edit/{type_id}', [AdminController::class, 'show_edit_protype']);
+        Route::post('/add-protype', [AdminController::class, 'add_protype']);
+        Route::post('/edit-protype', [AdminController::class, 'edit_protype']);
+        Route::get('/delete-protype', [AdminController::class, 'delete_protype']);
+    });
+    Route::prefix('manufactures')->group(function () {
+        Route::get('', [AdminController::class, 'show_manufactures'])->name('manufactures');
+        Route::get('/add', [AdminController::class, 'show_add_manufacture']);
+        Route::get('/edit/{manu_id}', [AdminController::class, 'show_edit_manufacture']);
+        Route::post('/add-manufacture', [AdminController::class, 'add_manufacture']);
+        Route::post('/edit-manufacture', [AdminController::class, 'edit_manufacture']);
+        Route::get('/delete-manufacture', [AdminController::class, 'delete_manufacture']);
+    });
 });
 
 Route::get('/send', [MyController::class, 'sendMail'])->name('send.mail');
 
 Route::post('/add-to-card', [CartController::class, 'addtocard']);
 Route::get('/remove-card/{id}', [CartController::class, 'removecard']);
+Route::get('/add-wishlist/{product_id}',[MyController::class,'addwishlist']);

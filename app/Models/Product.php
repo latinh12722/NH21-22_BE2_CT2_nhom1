@@ -18,4 +18,8 @@ class Product extends Model
     {
         return $this->belongsTo(Protype::class, 'type_id');
     }
+    function wishlist()
+    {
+        return $this->belongsTo(Wishlists::class,'product_id');
+    }
 }
