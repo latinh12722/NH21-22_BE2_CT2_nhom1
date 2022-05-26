@@ -18,9 +18,6 @@ use App\Http\Controllers\Store;
 |
 */
 
-Route::get('/', function () {
-    return view('customer.index');
-})->name('index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -30,9 +27,8 @@ require __DIR__ . '/auth.php';
 
 
 Route::prefix('')->group(function(){
-    Route::get('/',[MyController::class,'index']);
+    Route::get('/',[MyController::class,'index'])->name('customer.index');
     // Route::get('/new-products/{number}',[MyController::class,'getnewproduct']);
-
 });
 
 

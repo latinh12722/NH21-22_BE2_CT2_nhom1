@@ -49,7 +49,7 @@ class AuthenticatedSessionController extends Controller
             if (auth()->user()->role == 1) {
                 return redirect()->route('admin.index')->with('error', 'Email and password are wrong');
             } else {
-                return redirect()->route('index');
+                return redirect()->route('customer.index');
             }
         } else {
             return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors([
