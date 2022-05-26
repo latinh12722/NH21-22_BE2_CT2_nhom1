@@ -118,4 +118,13 @@ class Helper
             echo 'selected';
         }
     }
+  
+    function gettopsellingforManu($manu_id) {
+        $products = Product::where('manu_id',$manu_id)->orderBy('product_sale', 'DESC')->take(6)->get();
+        return $products;
+    }
+    function gettopsellingforProduct() {
+        $products = Product::orderBy('product_sale', 'DESC')->take(8)->get();
+        return $products;
+    }
 }

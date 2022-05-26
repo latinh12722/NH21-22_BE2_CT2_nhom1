@@ -54,7 +54,17 @@ class Store extends Controller
     {
         //
     }
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
 
+        $data['products'] = Product::query()
+        ->where('product_description', 'LIKE', "%{$keyword}%")
+        ->orWhere('product_name', 'LIKE', "%{$keyword}%")
+        ->Paginate(9);
+        return view('customer.store', $data);
+        
+    }
     /**
      * Display the specified resource.
      *

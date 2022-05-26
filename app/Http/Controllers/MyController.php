@@ -22,13 +22,39 @@ class MyController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view('customer.index', ['data' => $products]);
+        // $products = Product::all();
+        // return view('customer.index', ['data' => $products]);
+        $newproducts = Product::where('product_feature',1)->orderBy('product_id', 'DESC')->take(10)->get();
+        $topselling = Product::orderBy('product_sale', 'DESC')->take(8)->get();
+        // $Allprotypes = Protype::orderBy('protype_', 'DESC')->take(8)->get();
+        return view('customer.index',['newproducts' => $newproducts,'topselling' => $topselling]);
     }
     function getAllproducts()
     {
     }
-
+    function getnewproduct($number)
+    {
+        $newproducts = [];
+        if ($number == 1) {
+            $newproducts = Product::where('type_id', '1')->orderBy('product_id', 'DESC')->take(10)->get();
+        }
+        if ($number == 2) {
+            $newproducts = Product::where('type_id', '2')->orderBy('product_id', 'DESC')->take(10)->get();
+        }
+        $newproducts = Product::whereNotIn('type_id', [1, 2])->orderBy('product_id', 'DESC')->take(10)->get();
+        return view('customer.index', ['newproducts' => $newproducts]);
+    }
+    function getAccessories($number){
+        $newproducts = [];
+        if ($number == 1) {
+            $newproducts = Product::where('type_id', '1')->orderBy('product_id', 'DESC')->take(10)->get();
+        }
+        if ($number == 2) {
+            $newproducts = Product::where('type_id', '2')->orderBy('product_id', 'DESC')->take(10)->get();
+        }
+        $newproducts = Product::whereNotIn('type_id', [1, 2])->orderBy('product_id', 'DESC')->take(10)->get();
+        return $newproducts;
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -58,7 +84,8 @@ class MyController extends Controller
      */
     public function show($id)
     {
-        return view('store');
+        echo $id;
+        return view('customer.store');
     }
 
     /**

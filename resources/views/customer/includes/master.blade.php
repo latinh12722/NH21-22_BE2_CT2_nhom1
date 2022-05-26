@@ -99,13 +99,18 @@
                     <!-- SEARCH BAR -->
                     <div class="col-md-6">
                         <div class="header-search">
-                            <form>
-                                <select class="input-select">
+                            <form action="{{ route('keyword') }}" method="GET">
+                            <select class="input-select" onchange="location = this.value;">
                                     <option value="0">All Categories </option>
+                                    @foreach((new \App\Helpers\Helper)->getAllProtypes() as $value)
+                                    <a href="/store/type/{{$value->type_id}}">
+                                        <option value="/store/type/{{$value->type_id}}">{{$value -> type_name}}</option>
+                                    </a>
+                                    @endforeach
                                     <!-- <option value="1">Category 01</option>
                                     <option value="1">Category 02</option> -->
                                 </select>
-                                <input class="input" placeholder="Search here">
+                                <input class="input" name= "keyword" placeholder="Search here">
                                 <button class="search-btn">Search</button>
                             </form>
                         </div>

@@ -77,4 +77,10 @@ class Product_detail extends Controller
     {
         //
     }
+    public function scopeSearch($query){
+        if($key = request()-> key) {
+            $data = $query->where('name','like','%'.$key.'%');
+        }
+        return $query;
+    }
 }

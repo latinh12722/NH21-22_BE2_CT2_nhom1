@@ -22,4 +22,5 @@ class Product extends Model
     {
         return $this->belongsTo(Wishlists::class,'product_id');
     }
+
 }
