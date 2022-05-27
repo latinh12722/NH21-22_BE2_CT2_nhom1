@@ -20,7 +20,10 @@ class Product extends Model
     }
     function wishlist()
     {
-        return $this->belongsTo(Wishlists::class,'product_id');
+        return $this->belongsTo(Wishlists::class, 'product_id');
     }
-
+    function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

@@ -47,3 +47,36 @@ window.onclick = function (event) {
         modal.style.display = "none";
     }
 }
+
+
+//comments
+const btncomment = document.querySelector('#btncomment');
+btncomment.addEventListener('click',function () {
+    comment_product(btncomment.dataset.url,btncomment.dataset.productId)
+});
+async function comment_product(url,productid) {
+    const phone = document.querySelector('#comment_phone').value;
+    const name = document.querySelector('#comment_name').value;
+    const commentContent = document.querySelector('#comment_content').value;
+    const stars =  document.querySelectorAll('input[type=radio][name=rating]:checked');
+    const data = {
+        name: name,
+        phone: phone,
+        comment_content: commentContent,
+        product_Id: productid,
+        rating: stars[0].value
+    };
+    const token = document.querySelector('meta[name=csrf-token]').getAttribute('content');
+    console.log(token);
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': token
+        },
+        body: JSON.stringify(data)
+    });
+    const result = await response.json();
+    console.log(result);
+}

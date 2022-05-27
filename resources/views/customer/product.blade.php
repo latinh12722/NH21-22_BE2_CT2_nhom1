@@ -322,9 +322,9 @@
                                 <div class="col-md-3">
                                     <div id="review-form">
                                         <form class="review-form">
-                                            <input class="input" type="text" placeholder="Your Name">
-                                            <input class="input" type="email" placeholder="Your Email">
-                                            <textarea class="input" placeholder="Your Review"></textarea>
+                                            <input id="comment_name" class="input" type="text" placeholder="Your Name">
+                                            <input id="comment_phone" class="input" type="email" placeholder="Your Phone">
+                                            <textarea id="comment_content" class="input" placeholder="Your Review"></textarea>
                                             <div class="input-rating">
                                                 <span>Your Rating: </span>
                                                 <div class="stars">
@@ -335,7 +335,7 @@
                                                     <input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
                                                 </div>
                                             </div>
-                                            <button class="primary-btn">Submit</button>
+                                            <button data-url="{{ route('comments.store') }}" data-product-id="{{$product->product_id}}" id="btncomment" type="button" class="primary-btn">Submit</button>
                                         </form>
                                     </div>
                                 </div>
