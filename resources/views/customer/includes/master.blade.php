@@ -100,7 +100,7 @@
                     <div class="col-md-6">
                         <div class="header-search">
                             <form action="{{ route('keyword') }}" method="GET">
-                            <select class="input-select" onchange="location = this.value;">
+                                <select class="input-select" onchange="location = this.value;">
                                     <option value="0">All Categories </option>
                                     @foreach((new \App\Helpers\Helper)->getAllProtypes() as $value)
                                     <a href="/store/type/{{$value->type_id}}">
@@ -110,7 +110,7 @@
                                     <!-- <option value="1">Category 01</option>
                                     <option value="1">Category 02</option> -->
                                 </select>
-                                <input class="input" name= "keyword" placeholder="Search here">
+                                <input class="input" name="keyword" placeholder="Search here">
                                 <button class="search-btn">Search</button>
                             </form>
                         </div>
@@ -121,15 +121,41 @@
                     <div class="col-md-3 clearfix">
                         <div class="header-ctn">
                             <!-- Wishlist -->
-                            <div>
-                                <a href="#">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                     <i class="fa fa-heart-o"></i>
                                     <span>Your Wishlist</span>
+                                    @if(isset(Auth::user()->role))
+                                    <div class="qty">{{count(Auth::user()->wishlists)}}</div>
+                                    @else
                                     <div class="qty">0</div>
+                                    @endif
                                 </a>
+
+                                <div class="cart-dropdown">
+                                    <div class="cart-list">
+                                        @if(isset(Auth::user()->role))
+                                        @foreach(Auth::user()->wishlists as $wishlist)
+                                        @php $product = $wishlist ->products @endphp
+                                        <div class="product-widget">
+                                            <div class="product-img">
+                                                <img src="{{asset('img/'.$product->product_image)}}" alt="">
+                                            </div>
+                                            <div class="product-body">
+                                                <h3 class="product-name"><a href="{{url('product/'.$product->product_id)}}">{{$product->product_name}}</a></h3>
+                                                <h4 class="product-price">{{number_format($product->product_price-$product->product_price*$product->product_sale/100)}}đ</h4>
+                                            </div>
+                                            <form action="{{url('/remove-wishlist/'.$product->product_id)}}">
+                                                <button class="delete"><i class="fa fa-close"></i></button>
+                                            </form>
+                                        </div>
+
+                                        @endforeach
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                             <!-- /Wishlist -->
-
                             <!-- Cart -->
                             <div class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
@@ -147,10 +173,10 @@
                                                 <img src="{{asset('img/'.$product->product_image)}}" alt="">
                                             </div>
                                             <div class="product-body">
-                                                <h3 class="product-name"><a href="#">{{$product->product_name}}</a></h3>
+                                                <h3 class="product-name"><a href="{{url('product/'.$product->product_id)}}">{{$product->product_name}}</a></h3>
                                                 <h4 class="product-price"><span class="qty">{{$card->quantity}}x</span>{{number_format($product->product_price-$product->product_price*$product->product_sale/100)}}đ</h4>
                                             </div>
-                                            <form action="{{url('/remove-card/'.$card->id)}}">
+                                            <form action="{{url('/remove-wishlist/'.$product->product_id)}}">
                                                 <button class="delete"><i class="fa fa-close"></i></button>
                                             </form>
                                         </div>
@@ -161,8 +187,8 @@
                                         <h5>SUBTOTAL: {{number_format((new \App\Helpers\Helper)->total_arraycard())}} đ</h5>
                                     </div>
                                     <div class="cart-btns">
-                                        <a href="#">View Cart</a>
-                                        <a href="#">Checkout <i class="fa fa-arrow-circle-right"></i></a>
+                                        <a href="{{url('view-cart')}}">View Cart</a>
+                                        <a href="{{url('bill/')}}">Checkout <i class="fa fa-arrow-circle-right"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -374,7 +400,7 @@
                                 <span class="qty-down">-</span>
                             </div>
                         </div>
-                        <input type="hidden" name="product_id" value="123">
+                        <input id="input_product_id" type="hidden" name="product_id" value="">
                         <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
                     </div>
                 </form>

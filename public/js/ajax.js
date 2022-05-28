@@ -32,8 +32,10 @@ async function setvaluemodal(product_id,url) {
     document.getElementById("modal-name").innerHTML = result.product_name;
     const price = result.product_price - result.product_price * result.product_sale / 100;
     document.getElementById("modal-price").innerHTML = price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
-        + '<del class="product-old-price">' + result.product_price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }) + '</del>';
+        +  ' <del class="product-old-price">' + result.product_price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }) + '</del>';
     document.getElementById("modal-description").innerHTML = result.product_description;
+    const input_product_id = document.querySelector('#input_product_id');
+    input_product_id.value = result.product_id;
     modal.style.display = "block";
 }
 // When the user clicks on <span> (x), close the modal

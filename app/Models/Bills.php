@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Bills extends Model
 {
     use HasFactory;
+    protected $table = 'bills';
+    function user(){
+        return $this->belongsTo(User::class);
+    }
+    function products(){
+        return $this->belongsToMany(Product::class);
+    }
 }

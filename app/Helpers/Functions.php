@@ -5,6 +5,8 @@ namespace App\Helpers;
 use App\Models\Manufacture;
 use App\Models\Product;
 use App\Models\Protype;
+use App\Models\Wishlists;
+use Illuminate\Support\Facades\Auth;
 
 class Helper
 {
@@ -126,5 +128,13 @@ class Helper
     function gettopsellingforProduct() {
         $products = Product::orderBy('product_sale', 'DESC')->take(8)->get();
         return $products;
+    }
+    function check_wishlist($product_id){
+        if(Auth::check()){
+            if(count(Wishlists::where('id',Auth::user()->id)->where('product_id',$product_id)->get()) > 0){
+                return 'fa fa-heart';
+            }
+        }
+        return 'fa fa-heart-o';
     }
 }

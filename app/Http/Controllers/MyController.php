@@ -24,10 +24,10 @@ class MyController extends Controller
     {
         // $products = Product::all();
         // return view('customer.index', ['data' => $products]);
-        $newproducts = Product::where('product_feature',1)->orderBy('product_id', 'DESC')->take(10)->get();
+        $newproducts = Product::where('product_feature', 1)->orderBy('product_id', 'DESC')->take(10)->get();
         $topselling = Product::orderBy('product_sale', 'DESC')->take(8)->get();
         // $Allprotypes = Protype::orderBy('protype_', 'DESC')->take(8)->get();
-        return view('customer.index',['newproducts' => $newproducts,'topselling' => $topselling]);
+        return view('customer.index', ['newproducts' => $newproducts, 'topselling' => $topselling]);
     }
     function getAllproducts()
     {
@@ -44,7 +44,8 @@ class MyController extends Controller
         $newproducts = Product::whereNotIn('type_id', [1, 2])->orderBy('product_id', 'DESC')->take(10)->get();
         return view('customer.index', ['newproducts' => $newproducts]);
     }
-    function getAccessories($number){
+    function getAccessories($number)
+    {
         $newproducts = [];
         if ($number == 1) {
             $newproducts = Product::where('type_id', '1')->orderBy('product_id', 'DESC')->take(10)->get();
@@ -131,11 +132,23 @@ class MyController extends Controller
         return redirect()->back()->with('success', 'Email Sent!');
     }
 
-    function addwishlist($product_id){
-        if(Auth::check()){
-            $wishlist = new Wishlists;
-            $wishlist->product_id = $product_id;
-            User::find(Auth::user()->id)->wishlists()->save($wishlist);
+    function addwishlist($product_id)
+    {
+        if (Auth::check()) {
+            if (!count(Wishlists::where('product_id', $product_id)->where('id', Auth::user()->id)->get()) > 0) {
+                $wishlist = new Wishlists;
+                $wishlist->product_id = $product_id;
+                User::find(Auth::user()->id)->wishlists()->save($wishlist);
+            } else {
+                Wishlists::where('id', Auth::user()->id)->where('product_id', $product_id)->delete();
+            }
+        }
+        return redirect()->back();
+    }
+    function removewishlist($product_id)
+    {
+        if (Auth::check()) {
+            Wishlists::where('id', Auth::user()->id)->where('product_id', $product_id)->delete();
         }
         return redirect()->back();
     }

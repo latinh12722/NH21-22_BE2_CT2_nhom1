@@ -13,9 +13,10 @@ class Wishlists extends Model
         'id',
         'product_id',
     ];
+    
     function products()
     {
-        return $this->hasMany(Product::class,'product_id');
+        return $this->belongsTo(Product::class,'product_id');
     }
     function users()
     {

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function addtocard(Request $request)
+    public function addtocart(Request $request)
     {
         $product = Product::where('product_id', $request->product_id)->first();
         if (!isset(Cart::get($product->product_id)->quantity)) {
@@ -21,12 +21,20 @@ class CartController extends Controller
         } else {
             Cart::update($product->product_id, 1);
         }
-
         return redirect()->back();
     }
-    public function removecard(Request $request){
+    public function removecart(Request $request){
         $id = $request->id;
         Cart::remove($id);
+        return redirect()->back();
+    }
+    function output_quantity_cart(){
+        
+    }
+    function showviewcart(){
+        if (Cart::getTotalQuantity()){
+            return view('customer.viewcart');
+        }
         return redirect()->back();
     }
 }

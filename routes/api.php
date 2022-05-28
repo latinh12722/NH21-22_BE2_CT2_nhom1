@@ -18,4 +18,5 @@ use App\Http\Controllers\CommentController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post('product/show',[Product_detail::class,'getproduct']);
 Route::resource('comments', CommentController::class);

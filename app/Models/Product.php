@@ -26,4 +26,7 @@ class Product extends Model
     {
         return $this->hasMany(Comment::class);
     }
+    function bills(){
+        return $this->belongsToMany(Bills::class);
+    }
 }

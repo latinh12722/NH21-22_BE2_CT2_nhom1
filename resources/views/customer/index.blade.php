@@ -122,14 +122,19 @@
                                             <i class="fa fa-star"></i>
                                         </div>
                                         <div class="product-btns">
-                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                            <button data-url="{{url('/add-wishlist/'.$value->product_id)}}" id="addwishlist" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                             <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                            <button data-url="{{ url('/api/product/show') }}" data-product-id="{{$value->product_id}}" id="btnshowmodal" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                         </div>
                                     </div>
-                                    <div class="add-to-cart">
-                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
-                                    </div>
+                                    <form action="{{ url('add-to-card') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $value->product_id }}">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <div class="add-to-cart">
+                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                        </div>
+                                    </form>
                                 </div>
                                 @endforeach
                                 <!-- /product -->
@@ -244,7 +249,7 @@
                                     </div>
                                     <div class="product-body">
                                         <p class="product-category">{{ $value->manufacture->manu_name}}</p>
-                                        <h3  style ="height:80px" class="product-name"><a href="#">{{$value -> product_name}}</a></h3>
+                                        <h3 style="height:80px" class="product-name"><a href="#">{{$value -> product_name}}</a></h3>
                                         <!-- <h4 class="product-price">{{number_format($value -> product_Price)}} ₫ <del class="product-old-price">{{number_format($value -> product_Price * ($value -> product_sale / 100)+$value -> product_Price)}} ₫</del></h4> -->
                                         <h4 class="product-price">{{number_format($value->product_price-$value->product_price*$value->product_sale/100)}}đ
                                             <del class="product-old-price">{{number_format($value->product_price)}}đ</del>
@@ -257,13 +262,20 @@
                                             <i class="fa fa-star"></i>
                                         </div>
                                         <div class="product-btns">
-                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                            <button data-url="{{url('/add-wishlist/'.$value->product_id)}}" id="addwishlist" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
                                             <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-                                            <button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+                                            <button data-url="{{ url('/api/product/show') }}" data-product-id="{{$value->product_id}}" id="btnshowmodal" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                         </div>
                                     </div>
                                     <div class="add-to-cart">
-                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                        <form action="{{ url('add-to-card') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{ $value->product_id }}">
+                                            <input type="hidden" name="quantity" value="1">
+                                            <div class="add-to-cart">
+                                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                                 <!-- /product -->
@@ -316,8 +328,8 @@
                                 <p class="product-category">{{ $value->manufacture->manu_name}}</p>
                                 <h3 class="product-name"><a href="#">{{$value -> product_name}}</a></h3>
                                 <h4 class="product-price">{{number_format($value->product_price-$value->product_price*$value->product_sale/100)}}đ
-                                            <del class="product-old-price">{{number_format($value->product_price)}}đ</del>
-                                        </h4>
+                                    <del class="product-old-price">{{number_format($value->product_price)}}đ</del>
+                                </h4>
                             </div>
                         </div>
                         @if($key+1 == 3)
@@ -352,11 +364,11 @@
                             </div>
                             <div class="product-body">
                                 <p class="product-category">{{ $value->manufacture->manu_name}}</p>
-                                
+
                                 <h3 class="product-name"><a href="#">{{$value -> product_name}}</a></h3>
                                 <h4 class="product-price">{{number_format($value->product_price-$value->product_price*$value->product_sale/100)}}đ
-                                            <del class="product-old-price">{{number_format($value->product_price)}}đ</del>
-                                        </h4>
+                                    <del class="product-old-price">{{number_format($value->product_price)}}đ</del>
+                                </h4>
                             </div>
                         </div>
                         @if($key+1 == 3)
@@ -396,8 +408,8 @@
                                 <p class="product-category">{{ $value->manufacture->manu_name}}</p>
                                 <h3 class="product-name"><a href="#">{{$value -> product_name}}</a></h3>
                                 <h4 class="product-price">{{number_format($value->product_price-$value->product_price*$value->product_sale/100)}}đ
-                                            <del class="product-old-price">{{number_format($value->product_price)}}đ</del>
-                                        </h4>
+                                    <del class="product-old-price">{{number_format($value->product_price)}}đ</del>
+                                </h4>
                             </div>
                         </div>
                         @if($key+1 == 3)

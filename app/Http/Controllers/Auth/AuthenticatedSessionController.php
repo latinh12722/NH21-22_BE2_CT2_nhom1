@@ -47,7 +47,7 @@ class AuthenticatedSessionController extends Controller
         ]);
         if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
             if (auth()->user()->role == 1) {
-                return redirect()->route('admin.index')->with('error', 'Email and password are wrong');
+                return redirect()->route('admin')->with('error', 'Email and password are wrong');
             } else {
                 return redirect()->route('customer.index');
             }

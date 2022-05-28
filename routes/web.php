@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BillController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyController;
 use App\Http\Controllers\CartController;
@@ -43,6 +44,9 @@ Route::prefix('store')->group(function () {
 Route::prefix('product')->group(function () {
     Route::get('/{id}', [Product_detail::class, 'show']);
 });
+Route::prefix('bill')->group(function () {
+    Route::get('/', [BillController::class, 'index']);
+});
 
 Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], function () {
     Route::get('', function () {
@@ -76,7 +80,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], functio
 });
 
 Route::get('/send', [MyController::class, 'sendMail'])->name('send.mail');
-
-Route::post('/add-to-card', [CartController::class, 'addtocard']);
-Route::get('/remove-card/{id}', [CartController::class, 'removecard']);
+Route::post('/add-to-card', [CartController::class, 'addtocart']);
+Route::get('/remove-card/{id}', [CartController::class, 'removecart']);
+Route::get('/view-cart',[CartController::class,'showviewcart']);
 Route::get('/add-wishlist/{product_id}',[MyController::class,'addwishlist']);
+Route::get('/remove-wishlist/{product_id}',[MyController::class,'removewishlist']);
