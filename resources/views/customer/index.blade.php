@@ -122,7 +122,7 @@
                                             <i class="fa fa-star"></i>
                                         </div>
                                         <div class="product-btns">
-                                            <button data-url="{{url('/add-wishlist/'.$value->product_id)}}" id="addwishlist" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                            <button data-url="{{url('/add-wishlist/'.$value->product_id)}}" id="addwishlist" class="add-to-wishlist"><i class="{{ (new \App\Helpers\Helper)->check_wishlist($value->product_id) }}"></i><span class="tooltipp">add to wishlist</span></button>
                                             <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
                                             <button data-url="{{ url('/api/product/show') }}" data-product-id="{{$value->product_id}}" id="btnshowmodal" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                         </div>
@@ -262,7 +262,7 @@
                                             <i class="fa fa-star"></i>
                                         </div>
                                         <div class="product-btns">
-                                            <button data-url="{{url('/add-wishlist/'.$value->product_id)}}" id="addwishlist" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                            <button data-url="{{url('/add-wishlist/'.$value->product_id)}}" id="addwishlist" class="add-to-wishlist"><i class="{{ (new \App\Helpers\Helper)->check_wishlist($value->product_id) }}"></i><span class="tooltipp">add to wishlist</span></button>
                                             <button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
                                             <button data-url="{{ url('/api/product/show') }}" data-product-id="{{$value->product_id}}" id="btnshowmodal" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                         </div>
@@ -416,10 +416,7 @@
                     </div>
                     <div>
                         @endif
-
-                        <!-- /product widget -->
                         @endforeach
-                        <!-- product widget -->
                     </div>
                 </div>
             </div>

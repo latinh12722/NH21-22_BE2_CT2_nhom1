@@ -30,61 +30,63 @@
             <!-- ASIDE -->
             <div id="aside" class="col-md-3">
                 <!-- aside Widget -->
-                <div class="aside">
-                    <h3 class="aside-title">Categories</h3>
-                    <div class="checkbox-filter">
-                        @foreach((new \App\Helpers\Helper)->getselectarr_type($products) as $key=>$value)
-                        <div class="input-checkbox">
-                            <input type="checkbox" id="category-1">
-                            <label for="category-1">
-                                <span></span>
-                                {{(new \App\Helpers\Helper)->gettype_byid($key)->type_name}}
-                                <small>({{$value}})</small>
-                            </label>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-                <!-- /aside Widget -->
-
-                <!-- aside Widget -->
-                <div class="aside">
-                    <h3 class="aside-title">Price</h3>
-                    <div class="price-filter">
-                        <div id="price-slider"></div>
-                        <div class="input-number price-min">
-                            <input id="price-min" type="number">
-                            <span class="qty-up">+</span>
-                            <span class="qty-down">-</span>
-                        </div>
-                        <span>-</span>
-                        <div class="input-number price-max">
-                            <input id="price-max" type="number">
-                            <span class="qty-up">+</span>
-                            <span class="qty-down">-</span>
+                <form action="" method="get">
+                    <div class="aside">
+                        <h3 class="aside-title">Categories</h3>
+                        <div class="checkbox-filter">
+                            @foreach((new \App\Helpers\Helper)->getselectarr_type($products) as $key=>$value)
+                            <div class="input-checkbox">
+                                <input type="checkbox" id="category-1">
+                                <label for="category-1">
+                                    <span></span>
+                                    {{(new \App\Helpers\Helper)->gettype_byid($key)->type_name}}
+                                    <small>({{$value}})</small>
+                                </label>
+                            </div>
+                            @endforeach
                         </div>
                     </div>
-                </div>
-                <!-- /aside Widget -->
+                    <!-- /aside Widget -->
 
-                <!-- aside Widget -->
-                <div class="aside">
-                    <h3 class="aside-title">Brand</h3>
-                    <div class="checkbox-filter">
-                        @foreach((new \App\Helpers\Helper)->getselectarr_manu($products) as $key => $value)
-                        <div class="input-checkbox">
-                            <input type="checkbox" id="brand-1">
-                            <label for="brand-1">
-                                <span></span>
-                                {{(new \App\Helpers\Helper)->getmanu_byid($key)->manu_name}}
-                                <small>({{$value}})</small>
-                            </label>
+                    <!-- aside Widget -->
+                    <div class="aside">
+                        <h3 class="aside-title">Price</h3>
+                        <div class="price-filter">
+                            <div id="price-slider"></div>
+                            <div class="input-number price-min">
+                                <input id="price-min" type="number">
+                                <span class="qty-up">+</span>
+                                <span class="qty-down">-</span>
+                            </div>
+                            <span>-</span>
+                            <div class="input-number price-max">
+                                <input id="price-max" type="number">
+                                <span class="qty-up">+</span>
+                                <span class="qty-down">-</span>
+                            </div>
                         </div>
-                        @endforeach
-
                     </div>
-                </div>
-                <!-- /aside Widget -->
+                    <!-- /aside Widget -->
+
+                    <!-- aside Widget -->
+                    <div class="aside">
+                        <h3 class="aside-title">Brand</h3>
+                        <div class="checkbox-filter">
+                            @foreach((new \App\Helpers\Helper)->getselectarr_manu($products) as $key => $value)
+                            <div class="input-checkbox">
+                                <input type="checkbox" id="brand-1">
+                                <label for="brand-1">
+                                    <span></span>
+                                    {{(new \App\Helpers\Helper)->getmanu_byid($key)->manu_name}}
+                                    <small>({{$value}})</small>
+                                </label>
+                            </div>
+                            @endforeach
+
+                        </div>
+                    </div>
+                    <!-- /aside Widget -->
+                </form>
 
                 <!-- aside Widget -->
                 <div class="aside">
@@ -114,7 +116,21 @@
             <!-- STORE -->
             <div id="store" class="col-md-9">
                 <!-- store top filter -->
-
+                <div class="store-filter clearfix">
+                    <div class="store-sort">
+                        <form id="form_order" method="get">
+                            <label>
+                                Sort By:
+                                <select id="orderby" class="input-select">
+                                    <option value="new">New</option>
+                                    <option value="sale">Sale</option>
+                                    <option value="price_max">Price ascending</option>
+                                    <option value="price_min">Price descending</option>
+                                </select>
+                            </label>
+                        </form>
+                    </div>
+                </div>
                 <!-- /store top filter -->
 
                 <!-- store products -->
@@ -190,12 +206,20 @@
 </div>
 <!-- /SECTION -->
 <script>
-    const arrayaddwishlist = document.querySelectorAll('#addwishlist');
-    arrayaddwishlist.forEach(element => {
-        element.addEventListener('click', function() {
-            window.location = element.dataset.url;
-
-        });
+    const price_min = document.querySelector('#price-min');
+    const price_max = document.querySelector('#price_max');
+    price_max.addEventListener('change', () => {
+        console.log(price_max.value);
     });
+
+    price_min.addEventListener('change', () => {
+        console.log(price_min.value);
+    })
+
+    $(function() {
+        $('#orderby').change(function() {
+            $('#form_order').submit();
+        })
+    })
 </script>
 @endsection

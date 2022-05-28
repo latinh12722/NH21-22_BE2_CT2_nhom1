@@ -60,7 +60,9 @@
                     @if(Auth::user()->role == 1)
                     <li><a href="{{ url('admin') }}"><i class="fa fa-user-o"></i>Admin</a></li>
                     @else
-                    <li><a href="#"><i class="fa fa-user-o"></i>{{Auth::user()->name}}</a></li>
+
+                    <li><a href="#"><i class="fa fa-shopping-cart"></i>Bill</a></li>
+                    <li><a href="#"><i class="fa fa-user-o"></i>{{strtoupper(Auth::user()->name)}}</a></li>
                     @endif
                     <!-- <li><a href="{{url('login')}}"><i class="fa fa-user-o"></i> My Account</a></li> -->
                     <li>
@@ -100,12 +102,10 @@
                     <div class="col-md-6">
                         <div class="header-search">
                             <form action="{{ route('keyword') }}" method="GET">
-                                <select class="input-select" onchange="location = this.value;">
-                                    <option value="0">All Categories </option>
+                                <select name="type_id" class="input-select">
+                                    <option>All Categories </option>
                                     @foreach((new \App\Helpers\Helper)->getAllProtypes() as $value)
-                                    <a href="/store/type/{{$value->type_id}}">
-                                        <option value="/store/type/{{$value->type_id}}">{{$value -> type_name}}</option>
-                                    </a>
+                                    <option value="{{$value->type_id}}">{{$value -> type_name}}</option>
                                     @endforeach
                                     <!-- <option value="1">Category 01</option>
                                     <option value="1">Category 02</option> -->
@@ -418,6 +418,15 @@
     <script src="{{asset('js/jquery.zoom.min.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
     <script src="{{asset('js/ajax.js')}}"></script>
+    <script>
+        const arrayaddwishlist = document.querySelectorAll('#addwishlist');
+        arrayaddwishlist.forEach(element => {
+            element.addEventListener('click', function() {
+                window.location = element.dataset.url;
+
+            });
+        });
+    </script>
 </body>
 
 </html>
