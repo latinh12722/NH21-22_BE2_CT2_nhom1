@@ -60,7 +60,9 @@ class Store extends Controller
         $data['products'] = Product::where([['product_name', 'LIKE', "%{$keyword}%"],['product_description', 'LIKE', "%{$keyword}%"]]);
         if ($request->input('type_id')) {
             $type_id = $request->input('type_id');
-            $data['products'] = $data['products']->where('type_id', $type_id);
+            if($type_id!=-1){
+                $data['products'] = $data['products']->where('type_id', $type_id);
+            }
         }
         $data['products'] = $data['products']->Paginate(9);
         return view('customer.store', $data);

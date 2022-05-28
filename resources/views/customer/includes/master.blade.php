@@ -103,7 +103,7 @@
                         <div class="header-search">
                             <form action="{{ route('keyword') }}" method="GET">
                                 <select name="type_id" class="input-select">
-                                    <option>All Categories </option>
+                                    <option value="-1">All Categories </option>
                                     @foreach((new \App\Helpers\Helper)->getAllProtypes() as $value)
                                     <option value="{{$value->type_id}}">{{$value -> type_name}}</option>
                                     @endforeach
