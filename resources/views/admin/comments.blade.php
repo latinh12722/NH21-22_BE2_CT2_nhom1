@@ -2,13 +2,14 @@
 @section('title','Dashboard')
 
 @section('content')
+
 <div class="">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Bills</h1>
+                    <h1>Comments</h1>
                     @if (session('status'))
                     <span style="background-color: #ffc107;border-radius: 50px; padding: 3px;">{{session('status')}}</span>
                     @endif
@@ -16,11 +17,11 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{url('/admin')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Add Protypes</li>
+                        <li class="breadcrumb-item active">Products</li>
                     </ol>
                 </div>
             </div>
-        </div>
+        </div><!-- /.container-fluid -->
     </section>
 
     <!-- Main content -->
@@ -29,7 +30,7 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Bill </h3>
+                <h3 class="card-title">Comments {{count($comments)}}</h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -44,71 +45,53 @@
                 <table class="table table-striped projects">
                     <thead>
                         <tr>
-                            <th style="width:10%">
-                                Bill id
+                            <th style="width: 1%">
+                                ID
                             </th>
                             <th style="width: 10%">
-                                user id
+                                Name
+                            </th>
+                            <th style="width: 10%">
+                                Content
                             </th>
                             <th>
-                                Full name
+                                Phone
                             </th>
                             <th>
-                                Address
+                                Rating
                             </th>
                             <th>
-                                phone
+                                Created_at
                             </th>
-                            <th>
-                                ordernotes
-                            </th>
-                            <th style="width:20%;text-align: center;">
+                            <th style="width:20%; text-align: center;">
                                 Action
                             </th>
 
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- foreach -->
-                        @foreach($data as $value)
+                        @foreach ($comments as $value) {
                         <tr>
                             <td>
                                 {{$value->id}}
                             </td>
                             <td>
-                                {{$value->user_id}}
-                            </td>
-                            <td>
                                 {{$value->name}}
                             </td>
                             <td>
-                                {{$value->address}}
+                                {{$value->comment_content}}
                             </td>
                             <td>
                                 {{$value->phone}}
                             </td>
-                            <td>
-                                {{$value->order_note}}
+                            <td class="">
+                                {{$value->rating}}
                             </td>
-
-                            <td style="text-align: center;" class="project-actions">
-                                @if($value->confirm == 0)
-                                <a class="btn btn-info btn-sm" href="{{url('admin/bills/confirm/'.$value->id)}}">
-                                    <i class="fa fa-check" aria-hidden="true"></i>
-                                    Confirm
-                                </a>
-                                @else
-                                <a class="btn btn-danger btn-sm" href="{{url('admin/bills/unconfirm/'.$value->id)}}">
-                                    <i class="fa fa-check" aria-hidden="false"></i>
-                                    unconfirmed
-                                </a>
-                                @endif
-                                <a class="btn btn-info btn-sm" href="{{url('admin/bills/'.$value->id)}}">
-                                    <i class="fa fa-arrow-circle-right"></i>
-                                    </i>
-                                    Check bill
-                                </a>
-                                <button data-delete="{{url('admin/bills/remove/'.$value->id)}}" id="delete_product" class="btn btn-danger btn-sm">
+                            <td class="">
+                                {{$value->created_at}}
+                            </td>
+                            <td class="project-actions text-center">
+                                <button data-delete="{{url('admin/products/comments/remove/'.$value->id)}}" id="delete_product" class="btn btn-danger btn-sm">
                                     <i class="fas fa-trash">
                                     </i>
                                     Delete
@@ -126,4 +109,33 @@
     </section>
     <!-- /.content -->
 </div>
+<script>
+    var modal = document.getElementById("myModal");
+    var arraybtn = document.querySelectorAll("#delete_product");
+    var span = document.getElementsByClassName("close")[0];
+    const content = document.querySelector('#content');
+
+    arraybtn.forEach(element => {
+        element.addEventListener('click', function() {
+            const u = element.dataset.delete;
+            document.getElementById('delete_product').innerHTML = '<a href="' + u + '" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i>YES</a>';
+            console.log(document.getElementById('delete_product'));
+            content.innerHTML = 'Do you want to delete this product?';
+            modal.style.display = "block";
+        })
+    });
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    document.querySelector('#btn_not_delete').onclick = function() {
+        modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
 @endsection

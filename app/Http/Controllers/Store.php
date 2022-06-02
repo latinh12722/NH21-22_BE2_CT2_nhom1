@@ -10,53 +10,103 @@ use App\Models\Manufacture;
 class Store extends Controller
 {
 
-    function show_manuid($manu_id)
+    function show_manuid($manu_id,Request $request)
     {
-        $data['products'] = Product::where('manu_id', $manu_id)->Paginate(9);
+        $data['products'] = Product::where('manu_id', $manu_id);
+        if ($request->get('orderby') == 'new') {
+            $data['products'] = $data['products']->orderBy('product_id', 'ASC');
+            $data['products'] = $data['products']->orderBy('product_feature', 'DESC');
+        }
+        if ($request->get('orderby') == 'sale') {
+            $data['products'] = $data['products']->orderBy('product_sale', 'DESC');
+        }
+        if ($request->get('orderby') == 'price_max') {
+            $data['products'] = $data['products']->orderBy('product_price', 'DESC');
+        }
+        if ($request->get('orderby') == 'price_min') {
+            $data['products'] = $data['products']->orderBy('product_price', 'ASC');
+        }
+        if ($request->get('brand')) {
+            $data['products'] = $data['products']->where('manu_id', $request->get('brand'));
+        }
+        if ($request->get('category')) {
+            $data['products'] = $data['products']->where('type_id', $request->get('category'));
+        }
+        if ($request->get('price_max')) {
+            $data['products'] = $data['products']->where('product_price', '<', $request->get('price_max'));
+        }
+        if ($request->get('price_min')) {
+            $data['products'] = $data['products']->where('product_price', '>', $request->get('price_min'));
+        }
+        $data['products'] = $data['products']->Paginate(9);
         return view('customer.store', $data);
     }
     function show_typeid($type_id, Request $request)
     {
         $data['products'] = Product::where('type_id', $type_id);
-        if (count(Protype::where('type_id', $type_id)->get()) > 0) {
-            if ($request->get('orderby') == 'new') {
-                $data['products'] = $data['products']->orderBy('product_id', 'ASC');
-                $data['products'] = $data['products']->orderBy('product_feature', 'DESC');
-            }
-            if ($request->get('orderby') == 'sale') {
-                $data['products'] = $data['products']->orderBy('product_sale', 'DESC');
-            }
-            if ($request->get('orderby') == 'price_max') {
-                $data['products'] = $data['products']->orderBy('product_price', 'DESC');
-            }
-            if ($request->get('orderby') == 'price_min') {
-                $data['products'] = $data['products']->orderBy('product_price', 'ASC');
-            }
-            if ($request->get('brand')) {
-                $data['products'] = $data['products']->where('manu_id', $request->get('brand'));
-            }
-            if ($request->get('category')) {
-                $data['products'] = $data['products']->where('type_id', $request->get('category'));
-            }
-            if ($request->get('price_max')) {
-                $data['products'] = $data['products']->where('product_price', '<', $request->get('price_max'));
-            }
-            if ($request->get('price_min')) {
-                $data['products'] = $data['products']->where('product_price', '>', $request->get('price_min'));
-            }
-            $data['products'] = $data['products']->Paginate(9);
-            return view('customer.store', $data);
+        if ($request->get('orderby') == 'new') {
+            $data['products'] = $data['products']->orderBy('product_id', 'ASC');
+            $data['products'] = $data['products']->orderBy('product_feature', 'DESC');
         }
-        return view('errors.illustrated-layout');
+        if ($request->get('orderby') == 'sale') {
+            $data['products'] = $data['products']->orderBy('product_sale', 'DESC');
+        }
+        if ($request->get('orderby') == 'price_max') {
+            $data['products'] = $data['products']->orderBy('product_price', 'DESC');
+        }
+        if ($request->get('orderby') == 'price_min') {
+            $data['products'] = $data['products']->orderBy('product_price', 'ASC');
+        }
+        if ($request->get('brand')) {
+            $data['products'] = $data['products']->where('manu_id', $request->get('brand'));
+        }
+        if ($request->get('category')) {
+            $data['products'] = $data['products']->where('type_id', $request->get('category'));
+        }
+        if ($request->get('price_max')) {
+            $data['products'] = $data['products']->where('product_price', '<', $request->get('price_max'));
+        }
+        if ($request->get('price_min')) {
+            $data['products'] = $data['products']->where('product_price', '>', $request->get('price_min'));
+        }
+        $data['products'] = $data['products']->Paginate(9);
+        return view('customer.store', $data);
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data['products'] = Product::Paginate(9);
+        $data['products'] = Product::where('product_description','like','% %');
+        if ($request->get('orderby') == 'new') {
+            $data['products'] = $data['products']->orderBy('product_id', 'ASC');
+            $data['products'] = $data['products']->orderBy('product_feature', 'DESC');
+        }
+        if ($request->get('orderby') == 'sale') {
+            $data['products'] = $data['products']->orderBy('product_sale', 'DESC');
+        }
+        if ($request->get('orderby') == 'price_max') {
+            $data['products'] = $data['products']->orderBy('product_price', 'DESC');
+        }
+        if ($request->get('orderby') == 'price_min') {
+            $data['products'] = $data['products']->orderBy('product_price', 'ASC');
+        }
+        if ($request->get('brand')) {
+            $data['products'] = $data['products']->where('manu_id', $request->get('brand'));
+        }
+        if ($request->get('category')) {
+            $data['products'] = $data['products']->where('type_id', $request->get('category'));
+        }
+        if ($request->get('price_max')) {
+            $data['products'] = $data['products']->where('product_price', '<', $request->get('price_max'));
+        }
+        if ($request->get('price_min')) {
+            $data['products'] = $data['products']->where('product_price', '>', $request->get('price_min'));
+        }
+
+        $data['products'] = $data['products']->Paginate(9);
         return view('customer.store', $data);
     }
 

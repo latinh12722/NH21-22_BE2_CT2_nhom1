@@ -50,7 +50,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
 
             <!-- Right navbar links -->
-            
+
         </nav>
         <!-- /.navbar -->
 
@@ -229,7 +229,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
+    <script>
+        var modal = document.getElementById("myModal");
+        var arraybtn = document.querySelectorAll("#delete_product");
+        var span = document.getElementsByClassName("close")[0];
+        const content = document.querySelector('#content');
 
+        arraybtn.forEach(element => {
+            element.addEventListener('click', function() {
+                const u = element.dataset.delete;
+                document.getElementById('delete_product').innerHTML = '<a href="' + u + '" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i>YES</a>';
+                console.log(document.getElementById('delete_product'));
+                content.innerHTML = 'Do you want to delete this item?';
+                modal.style.display = "block";
+            })
+        });
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        document.querySelector('#btn_not_delete').onclick = function() {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 
 </html>

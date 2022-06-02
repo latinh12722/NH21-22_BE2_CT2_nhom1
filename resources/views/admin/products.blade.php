@@ -63,7 +63,7 @@
                             <th>
                                 Manufacture
                             </th>
-                            <th style="width: 8%" class="">
+                            <th style="width: 8%">
                                 Protype
                             </th>
                             <th>
@@ -81,13 +81,10 @@
                         ?>
                             <tr>
                                 <td>
-                                    <?php echo $value->product_id ?>
+                                    {{$value->product_id}}
                                 </td>
                                 <td>
-                                    <a>
-                                        <?php echo $value->product_name ?>
-                                    </a>
-                                    <br />
+                                    {{$value->product_name}}
                                 </td>
                                 <td>
                                     <img src="{{asset('img/'.$value->product_image)}}" width="100px" alt="">
@@ -118,7 +115,7 @@
                                         </i>
                                         Delete
                                     </button>
-                                    <a class="btn btn-info btn-sm mt-2" href="">
+                                    <a class="btn btn-info btn-sm mt-2" href="{{url('admin/products/comments/'.$value->product_id)}}">
                                         <i class="far fa-comments"></i>
                                         Comments
                                     </a>
@@ -135,33 +132,6 @@
     </section>
     <!-- /.content -->
 </div>
-<script>
-    var modal = document.getElementById("myModal");
-    var arraybtn = document.querySelectorAll("#delete_product");
-    var span = document.getElementsByClassName("close")[0];
-    const content = document.querySelector('#content');
 
-    arraybtn.forEach(element => {
-        element.addEventListener('click', function() {
-            const u = element.dataset.delete;
-            document.getElementById('delete_product').innerHTML = '<a href="' + u + '" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i>YES</a>';
-            console.log(document.getElementById('delete_product'));
-            content.innerHTML = 'Do you want to delete this product?';
-            modal.style.display = "block";
-        })
-    });
-
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-    document.querySelector('#btn_not_delete').onclick = function() {
-        modal.style.display = "none";
-    }
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-</script>
 
 @endsection

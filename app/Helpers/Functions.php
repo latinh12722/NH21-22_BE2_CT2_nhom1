@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use App\Models\Bill;
+use App\Models\Comment;
 use App\Models\Manufacture;
 use App\Models\Product;
 use App\Models\Protype;
@@ -22,6 +24,9 @@ class Helper
     function getAllManu()
     {
         return Manufacture::all();
+    }
+    function getAllBills(){
+        return Bill::all();
     }
     function getRelatedProducts($product_id)
     {
@@ -121,27 +126,63 @@ class Helper
             echo 'selected';
         }
     }
-  
-    function gettopsellingforManu($manu_id) {
-        $products = Product::where('manu_id',$manu_id)->orderBy('product_sale', 'DESC')->take(6)->get();
+
+    function gettopsellingforManu($manu_id)
+    {
+        $products = Product::where('manu_id', $manu_id)->orderBy('product_sale', 'DESC')->take(6)->get();
         return $products;
     }
-    function gettopsellingforProduct() {
+    function gettopsellingforProduct()
+    {
         $products = Product::orderBy('product_sale', 'DESC')->take(8)->get();
         return $products;
     }
-    function check_wishlist($product_id){
-        if(Auth::check()){
-            if(count(Wishlists::where('id',Auth::user()->id)->where('product_id',$product_id)->get()) > 0){
+    function check_wishlist($product_id)
+    {
+        if (Auth::check()) {
+            if (count(Wishlists::where('id', Auth::user()->id)->where('product_id', $product_id)->get()) > 0) {
                 return 'fa fa-heart';
             }
         }
         return 'fa fa-heart-o';
     }
-    function substring_name($name){
-        if (strlen($name) > 100){
-            return substr($name,0,50)."...";
+    function substring_name($name)
+    {
+        if (strlen($name) > 100) {
+            return substr($name, 0, 50) . "...";
         }
         return $name;
+    }
+    function getCountCommentByProductId($rating, $product_id)
+    {
+        return count(Comment::where('product_product_id', $product_id)->where('rating', $rating)->get());
+    }
+    function rating_percentage($product_id)
+    {
+        $star1 = (new \App\Helpers\Helper)->getCountCommentByProductId(1, $product_id);
+        $star2 = (new \App\Helpers\Helper)->getCountCommentByProductId(2, $product_id);
+        $star3 = (new \App\Helpers\Helper)->getCountCommentByProductId(3, $product_id);
+        $star4 = (new \App\Helpers\Helper)->getCountCommentByProductId(4, $product_id);
+        $star5 = (new \App\Helpers\Helper)->getCountCommentByProductId(5, $product_id);
+        $count_arr = count(Comment::where('product_product_id', $product_id)->get()) > 0 ? count(Comment::where('product_product_id', $product_id)->get()) : 1;
+        if ($count_arr > 0){
+            $cal = ($star1 * 1 + $star2 * 2 + $star3 * 3 + $star4 * 4 + $star5 * 5) / $count_arr;
+            return number_format($cal, 2);
+        }
+        return 5;
+    }
+    function getTotalStar($product_id){
+        return count(Comment::where('product_product_id', $product_id)->get());
+    }
+    function getRatingStar($rating, $product_id){
+        $star = count(Comment::where('product_product_id', $product_id)->where('rating', $rating)->get());
+        $total = count(Comment::where('product_product_id', $product_id)->get());
+        if($total == 0){
+            return 0;
+        }
+        return ($star / $total)*100;
+    }
+    function str_getRatingStar($rating, $product_id){
+        return '<div style="width: '.(new \App\Helpers\Helper)->getRatingStar($rating, $product_id).'%;"></div>';
     }
 }

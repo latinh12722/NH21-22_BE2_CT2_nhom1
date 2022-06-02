@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bill;
+use App\Models\Comment;
 use App\Models\Manufacture;
 use App\Models\Product;
 use App\Models\Protype;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Redirect;
 class AdminController extends Controller
 {
     function show_products()
@@ -27,7 +28,7 @@ class AdminController extends Controller
     function add_product(Request $request)
     {
         if (isset($_FILES['fileupload']['name']) && strlen($_FILES['fileupload']['name']) > 0) {
-            $target_dir = "../images/";
+            $target_dir = public_path('img/');
             $target_file = $target_dir . basename($_FILES["fileupload"]["name"]);
             $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
@@ -63,12 +64,13 @@ class AdminController extends Controller
             'type_id' => $type_id,
             'product_image' => $image
         ]);
+        move_uploaded_file($_FILES["fileupload"]["tmp_name"], $target_file);
         return redirect()->route('products')->with('status', 'Add database successful.');
     }
     function edit_product(Request $request)
     {
         if (isset($_FILES['fileupload']['name']) && strlen($_FILES['fileupload']['name']) > 0) {
-            $target_dir = "../images/";
+            $target_dir = public_path('img/');
             $target_file = $target_dir . basename($_FILES["fileupload"]["name"]);
             $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
@@ -110,6 +112,9 @@ class AdminController extends Controller
             'type_id' => $type_id,
             'product_image' => $image
         ]);
+        if (strlen($_FILES['fileupload']['name']) > 0) {
+            move_uploaded_file($_FILES["fileupload"]["tmp_name"], $target_file);
+        }
         return redirect()->back()->with('status', 'Edit database successful.');
     }
     function delete_product($id)
@@ -117,7 +122,16 @@ class AdminController extends Controller
         Product::where('product_id', $id)->delete();
         return redirect()->back()->with('status', 'Delete database successful.');
     }
-
+    function show_comment_product_id($id)
+    {
+        $comments = Product::find($id)->comments;
+        return view('admin.comments', ['comments' => $comments]);
+    }
+    function remove_comment($id)
+    {
+        Comment::find($id)->delete();
+        return Redirect()->back()->with('status', 'Delete database successful.');
+    }
 
 
 
@@ -133,10 +147,14 @@ class AdminController extends Controller
     }
     function show_edit_protype($id)
     {
-        $protype = Protype::where('type_id', $id)->first();
-        return view('admin.editprotype', ['protype' => $protype]);
+        if (count(Protype::where('type_id', $id)->get()) > 0){
+            $protype = Protype::find($id)->first();
+            return view('admin.editprotype', ['protype' => $protype]);
+        }
+        return Redirect()->back();
     }
-    function add_protype(Request $request){
+    function add_protype(Request $request)
+    {
         $type_name = $request->type_name;
         Protype::insert([
             'type_name' => $type_name
@@ -152,7 +170,15 @@ class AdminController extends Controller
         ]);
         return redirect()->back()->with('status', 'Edit database successful.');
     }
-
+    function delete_protype($type_id)
+    {
+        if (count(Product::where('type_id', $type_id)->get()) > 0) {
+            return Redirect()->back()->with('status', 'Delete data failed, because there are products in this table.');
+        } else {
+            Protype::find($type_id)->delete();
+            return Redirect()->back()->with('status', 'Delete database successful.');
+        }
+    }
 
 
     function show_manufactures()
@@ -169,7 +195,8 @@ class AdminController extends Controller
         $manufacture = Manufacture::where('manu_id', $id)->first();
         return view('admin.editmanufacture', ['manufacture' => $manufacture]);
     }
-    function add_manufacture(Request $request){
+    function add_manufacture(Request $request)
+    {
         $manu_name = $request->manu_name;
         Manufacture::insert([
             'manu_name' => $manu_name
@@ -185,22 +212,50 @@ class AdminController extends Controller
         ]);
         return redirect()->back()->with('status', 'Edit database successful.');
     }
+    function delete_manufacture($manu_id)
+    {
+        if (count(Product::where('manu_id', $manu_id)->get()) > 0) {
+            return Redirect()->back()->with('status', 'Delete data failed, because there are products in this table.');
+        } else {
+            Manufacture::find($manu_id)->delete();
+            return Redirect()->back()->with('status', 'Delete database successful.');
+        }
+    }
+
+
+
+
 
     function show_bills()
     {
         $bills = Bill::all();
         return view('admin.bills', ['data' => $bills]);
     }
-    function billbyid($id){
-        if(count(Bill::where('id',$id)->get()) == 1){
+    function billbyid($id)
+    {
+        if (count(Bill::where('id', $id)->get()) == 1) {
             $bill = Bill::find($id);
             return view('admin.billdetail', ['bill' => $bill]);
         }
         return view('');
     }
-    function show_edit_bill($id)
+    function confirm_bill($id)
     {
-        $bill = Product::where('bill_id', $id)->first();
-        return view('admin.editbill', ['bill' => $bill]);
+        Bill::where('id', $id)->update([
+            'confirm' => 1
+        ]);
+        return Redirect()->back()->with('status', 'successful confirmation.');
+    }
+    function unconfirmed($id)
+    {
+        Bill::where('id', $id)->update([
+            'confirm' => 0
+        ]);
+        return Redirect()->back()->with('status', 'successfully unconfirmed.');
+    }
+    function remove_bill($id)
+    {
+        Bill::where('id', $id)->delete();
+        return redirect()->route('admin.bills')->with('status', 'Delete database successful.');
     }
 }

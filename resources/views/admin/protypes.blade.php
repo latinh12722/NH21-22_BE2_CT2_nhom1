@@ -10,6 +10,9 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1>Protypes</h1>
+                    @if (session('status'))
+                    <span style="background-color: #ffc107;border-radius: 50px; padding: 3px;">{{session('status')}}</span>
+                    @endif
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -69,11 +72,11 @@
                                         </i>
                                         Edit
                                     </a>
-                                    <a class="btn btn-danger btn-sm" href="{{url('admin/protypes/edit/'.$value->type_id)}}">
+                                    <button data-delete="{{url('admin/protypes/delete-protype/'.$value->type_id)}}" id="delete_product" class="btn btn-danger btn-sm">
                                         <i class="fas fa-trash">
                                         </i>
                                         Delete
-                                    </a>
+                                    </button>
                                 </td>
                             </tr>
                         <?php } ?>

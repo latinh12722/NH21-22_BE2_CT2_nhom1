@@ -14,35 +14,33 @@
                     </div>
                     <div class="shop-body">
                         <h3>Laptop<br>Collection</h3>
-                        <a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="/store/type/2" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
             <!-- /shop -->
-
             <!-- shop -->
             <div class="col-md-4 col-xs-6">
                 <div class="shop">
                     <div class="shop-img">
-                        <img src="{{asset('img/shop03.png')}}" alt="">
+                        <img height="240px" src="{{asset('img/product07.png')}}" alt="">
                     </div>
                     <div class="shop-body">
-                        <h3>Accessories<br>Collection</h3>
-                        <a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+                        <h3>Phone<br>Collection</h3>
+                        <a href="/store/type/1" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
             <!-- /shop -->
-
             <!-- shop -->
             <div class="col-md-4 col-xs-6">
                 <div class="shop">
                     <div class="shop-img">
-                        <img src="{{asset('img/shop02.png')}}" alt="">
+                        <img height = "240px" src="{{asset('img/product02.png')}}" alt="">
                     </div>
                     <div class="shop-body">
-                        <h3>Cameras<br>Collection</h3>
-                        <a href="#" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+                        <h3>Headphone<br>Collection</h3>
+                        <a href="/store/type/5" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -67,13 +65,12 @@
                     <h3 class="title">New Products</h3>
                     <div class="section-nav">
                         <ul class="section-tab-nav tab-nav">
-                            <!-- <?php $protype_navbar = (new \App\Helpers\Helper)->getAllProtypes() ?> -->
-
-                            <li class="active"><a href="/store/">All Categories</a></li>
-                            @foreach((new \App\Helpers\Helper)->getAllProtypes() as $value)
-                            <li><a href="/store/type/{{$value->type_id}}">{{$value -> type_name}}</a></li>
-                            @endforeach
-
+                            <ul class="section-tab-nav tab-nav">
+                                <li class="active"><a href="/store/">All Protype</a></li>
+                                <li><a href="/store/type/2">Laptops</a></li>
+                                <li><a href="/store/type/1">Smartphones</a></li>
+                                <li><a href="/store/type/5">Headphones</a></li>
+                            </ul>
                         </ul>
                     </div>
                 </div>
@@ -190,7 +187,7 @@
                     </ul>
                     <h2 class="text-uppercase">hot deal this week</h2>
                     <p>New Collection Up to 50% OFF</p>
-                    <a class="primary-btn cta-btn" href="#">Shop now</a>
+                    <a class="primary-btn cta-btn" href="/store/">Shop now</a>
                 </div>
             </div>
         </div>
@@ -213,9 +210,9 @@
                     <h3 class="title">Top selling</h3>
                     <div class="section-nav">
                         <ul class="section-tab-nav tab-nav">
-                            <li class="active"><a href="/store/type/2">Laptops</a></li>
-                            <li><a href="/store/type/1">Smartphones</a></li>
+                            <li class="active"><a href="/store/">All Protype</a></li>
                             <li><a href="/store/type/2">Laptops</a></li>
+                            <li><a href="/store/type/1">Smartphones</a></li>
                             <li><a href="/store/type/5">Headphones</a></li>
                         </ul>
                     </div>

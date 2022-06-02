@@ -76,11 +76,11 @@
                                         </i>
                                         Edit
                                     </a>
-                                    <a class="btn btn-danger btn-sm" href="{{url('admin/manufactures/delete/'.$value->manu_id)}}">
+                                    <button data-delete="{{url('admin/manufactures/delete-manufacture/'.$value->manu_id)}}" id="delete_product" class="btn btn-danger btn-sm">
                                         <i class="fas fa-trash">
                                         </i>
                                         Delete
-                                    </a>
+                                    </button>
                                 </td>
                             </tr>
                         <?php } ?>

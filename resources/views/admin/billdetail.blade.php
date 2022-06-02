@@ -31,20 +31,28 @@
             <div class="card-header">
                 <div class="row">
                     <h6 class="col-md-1" style="display: inline-block;">Bill: {{$bill->id}} </h6>
+                    <h6 class="col-md-1" style="display: inline-block;">User_id: {{$bill->user_id}} </h6>
                     <h6 class="col-md-2" style="display: inline-block;">Name: {{$bill->name}} </h6>
                     <h6 class="col-md-2" style="display: inline-block;">Phone: {{$bill->phone}} </h6>
                     <h6 class="col-md-3" style="display: inline-block;">Address: {{$bill->address}} </h6>
-                    <h6 class="col-md-2" style="display: inline-block;">{{$bill->created_at}} </h6>
+                    <h6 class="col-md-1" style="display: inline-block;">{{$bill->created_at}} </h6>
                     <div class="col-md-2">
-                        <a class="btn btn-info btn-sm" href="">
+                        @if($bill->confirm == 0)
+                        <a class="btn btn-info btn-sm" href="{{url('admin/bills/confirm/'.$bill->id)}}">
                             <i class="fa fa-check" aria-hidden="true"></i>
                             Confirm
                         </a>
-                        <a class="btn btn-danger btn-sm" href="delete.php?bill_id=">
+                        @else
+                        <a class="btn btn-danger btn-sm" href="{{url('admin/bills/unconfirm/'.$bill->id)}}">
+                            <i class="fa fa-check" aria-hidden="false"></i>
+                            unconfirmed
+                        </a>
+                        @endif
+                        <button data-delete="{{url('admin/bills/remove/'.$bill->id)}}" id="delete_product" class="btn btn-danger btn-sm">
                             <i class="fas fa-trash">
                             </i>
                             Delete
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -52,31 +60,48 @@
                 <table class="table table-striped projects">
                     <thead>
                         <tr>
-                            <th style="width:10%">
-                                Bill id
-                            </th>
-                            <th style="width: 10%">
-                                user id
+                            <th>
+                                Image
                             </th>
                             <th>
-                                Full name
+                                Name
                             </th>
                             <th>
-                                Address
+                                Quantity
                             </th>
                             <th>
-                                phone
-                            </th>
-                            <th>
-                                ordernotes
-                            </th>
-                            <th style="width:20%;text-align: center;">
-                                Action
+                                Price
                             </th>
 
                         </tr>
                     </thead>
-
+                    <tbody>
+                        <!-- foreach -->
+                        @php $tong = 0; @endphp
+                        @foreach($bill->bill_products as $value)
+                        <tr>
+                            <td>
+                                <img src="{{asset('img/'.$value->product->product_image)}}" width="100px" height="100px">
+                            </td>
+                            <td>
+                                {{$value->product->product_name}}
+                            </td>
+                            <td>
+                                {{$value->quantity}}
+                            </td>
+                            <td>
+                                {{number_format($value->product->product_price-$value->product->product_price*$value->product->product_sale/100)}}đ
+                            </td>
+                        </tr>
+                        @php $tong += ($value->product->product_price-$value->product->product_price*$value->product->product_sale/100)*$value->quantity ; @endphp
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Total: </td>
+                            <td>{{number_format($tong)."đ"}}</td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
             <!-- /.card-body -->

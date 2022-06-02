@@ -42,12 +42,12 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="inputName">Product Id</label>
+                                <label for="inputName">Id</label>
                                 <input type="hidden" name="id" value="{{$product->product_id}}">
                                 <input name="id" value="{{$product->product_id}}" disabled type="text" id="inputName" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label for="inputName">Product Name</label>
+                                <label for="inputName">Name</label>
                                 <input name="name" value="{{$product->product_name}}" type="text" id="inputName" class="form-control" required>
                             </div>
 
@@ -114,7 +114,7 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <a href="{{url('admin/products')}}" class="btn btn-secondary">Cancel</a>
+                    <a href="products.php" class="btn btn-secondary">Cancel</a>
                     <input type="submit" name="submit_product" value="Update" class="btn btn-success float-right">
                 </div>
             </div>
@@ -123,14 +123,4 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-<script>
-    imgInp.onchange = evt => {
-        const [file] = imgInp.files
-        if (file) {
-            blah.src = URL.createObjectURL(file)
-        }
-    }
-</script>
-
-
 @endsection

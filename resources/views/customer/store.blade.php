@@ -141,7 +141,7 @@
                         <div class="product">
                             <div class="product-img">
                                 <a href="{{url('product/'.$value->product_id)}}">
-                                    <img src="{{asset('img/'.$value->product_image)}}" alt="" width="262px" height="262px">
+                                    <img height="260px" style="max-width: 280px; margin: 0 auto; padding: 40px;" src="{{asset('img/'.$value->product_image)}}" alt="" width="262px" height="262px">
                                 </a>
                                 <div class="product-label">
 

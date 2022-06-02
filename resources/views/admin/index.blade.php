@@ -70,7 +70,7 @@
           <!-- small box -->
           <div class="small-box bg-info">
             <div class="inner">
-              <h3>123</h3>
+              <h3>{{ count((new \App\Helpers\Helper)->getAllBills()) }}</h3>
 
               <p>Bill</p>
             </div>

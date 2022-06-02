@@ -54,7 +54,8 @@ window.onclick = function (event) {
 //comments
 const btncomment = document.querySelector('#btncomment');
 btncomment.addEventListener('click',function () {
-    comment_product(btncomment.dataset.url,btncomment.dataset.productId)
+    comment_product(btncomment.dataset.url,btncomment.dataset.productId);
+    window.location.reload(true);
 });
 async function comment_product(url,productid) {
     const phone = document.querySelector('#comment_phone').value;

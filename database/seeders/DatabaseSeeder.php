@@ -249,7 +249,7 @@ class DatabaseSeeder extends Seeder
                 'product_feature' => 0
             ],
             [
-                'product_name' => 'Laptop Dell Inspiron 15 5515 R7 5700U/8GB/512GB/Office H&S/Win11 (N5R75700U104W1)',
+                'product_name' => 'Laptop Dell Inspiron 15 5515 R7 5700U/8GB/512GB',
                 'product_price' => 24290000,
                 'manu_id' => '3',
                 'type_id' => '2',
@@ -258,7 +258,7 @@ class DatabaseSeeder extends Seeder
                 'product_sale' => 22,
                 'product_feature' => 0
             ], [
-                'product_name' => 'Laptop Dell XPS 13 9310 i5 1135G7/8GB/512GB/Cáp/Office H&S/Win11 (70273578)',
+                'product_name' => 'Laptop Dell XPS 13 9310 i5 1135G7/8GB/512GB',
                 'product_price' => 37790000,
                 'manu_id' => '3',
                 'type_id' => '2',
@@ -267,7 +267,7 @@ class DatabaseSeeder extends Seeder
                 'product_sale' => 10,
                 'product_feature' => 1
             ], [
-                'product_name' => 'Laptop Dell Gaming Alienware m15 R6 i7 11800H/32GB/1TB SSD/8GB RTX3070/240Hz/OfficeHS/Win11 (70272633)',
+                'product_name' => 'Laptop Dell Gaming Alienware m15 ',
                 'product_price' => 68000000,
                 'manu_id' => '3',
                 'type_id' => '2',
@@ -276,6 +276,55 @@ class DatabaseSeeder extends Seeder
                 'product_sale' => 5,
                 'product_feature' => 0
             ]
+            , [
+                'product_name' => 'Laptop Dell XPS 13 7390 i5 10210U/8GB/256GB/Win10 (70197462)',
+                'product_price' => 25000000,
+                'manu_id' => '3',
+                'type_id' => '2',
+                'product_image' => 'dell6.jpg',
+                'product_description' => 'Laptop Dell XPS 13 7390 i5 (70197462) là chiếc laptop doanh nhân cao cấp vừa được ra mắt thuộc dòng Ultrabook có thiết kế siêu mỏng nhẹ. Laptop trang bị chip Intel Core i5 thế hệ mới nhất có nhiều cải tiến so với thế hệ cũ',
+                'product_sale' => 20,
+                'product_feature' => 1
+            ], [
+                'product_name' => 'Laptop Dell XPS 13 7390 i5 (70197462)',
+                'product_price' => 30990000,
+                'manu_id' => '3',
+                'type_id' => '2',
+                'product_image' => 'dell5.jpg',
+                'product_description' => 'Laptop Dell Latitude 3520 i7 (70261780) sở hữu thiết hiện đại thường thấy của các sản phẩm nhà Dell, nhưng mang trong mình cấu hình mạnh mẽ vượt trội, là người trợ thủ đắc lực cho bạn từ công việc đến giải trí',
+                'product_sale' => 5,
+                'product_feature' => 0
+            ],
+            [
+                'product_name' => 'iPhone 13 Pro Max 256GB',
+                'product_price' => 360000000,
+                'manu_id' => '1',
+                'type_id' => '1',
+                'product_image' => 'iphone13.jpg',
+                'product_description' => 'Trong những tháng cuối năm 2021, Apple đã chính thức giới thiệu đến người dùng cũng như iFan thế hệ iPhone 12 series mới với hàng loạt tính năng bứt phá, thiết kế được lột xác hoàn toàn, hiệu năng đầy mạnh mẽ và một trong số đó chính là iPhone 12 64GB.',
+                'product_sale' => 5,
+                'product_feature' => 0
+            ],
+            [
+                'product_name' => 'iPhone 13 Pro Max 512GB Pink',
+                'product_price' => 25000000,
+                'manu_id' => '1',
+                'type_id' => '1',
+                'product_image' => 'iphone13pink.jpg',
+                'product_description' => 'Trong những tháng cuối năm 2021, Apple đã chính thức giới thiệu đến người dùng cũng như iFan thế hệ iPhone 12 series mới với hàng loạt tính năng bứt phá, thiết kế được lột xác hoàn toàn, hiệu năng đầy mạnh mẽ và một trong số đó chính là iPhone 12 64GB.',
+                'product_sale' => 10,
+                'product_feature' => 0
+            ],
+            [
+                'product_name' => 'SamSung ZFlip 3 5G 128GB',
+                'product_price' => 25000000,
+                'manu_id' => '2',
+                'type_id' => '1',
+                'product_image' => 'samsungzflip.jpg',
+                'product_description' => 'Thiết kế thời thượng đầy lôi cuốn, Biểu tượng thời trang độc đáo nằm trọn trong túi gập cho bạn thỏa sức tham gia các hoạt động ở bất cứ nơi đâu. Không chỉ là điện thoại, đó là món trang sức cá tính.',
+                'product_sale' => 15,
+                'product_feature' => 1
+            ],
         ]);
     }
 }

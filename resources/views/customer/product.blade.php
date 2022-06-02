@@ -174,13 +174,14 @@
                                 <div class="col-md-3">
                                     <div id="rating">
                                         <div class="rating-avg">
-                                            <span>4.5</span>
+                                            <span>{{(new \App\Helpers\Helper)->rating_percentage($product->product_id)}}</span>
                                             <div class="rating-stars">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-o"></i>
+                                                @for($i=1;$i<=5;$i++) @if($i<=(new \App\Helpers\Helper)->rating_percentage($product->product_id))
+                                                    <i class="fa fa-star"></i>
+                                                    @else
+                                                    <i class="fa fa-star-o"></i>
+                                                    @endif
+                                                    @endfor
                                             </div>
                                         </div>
                                         <ul class="rating">
@@ -193,9 +194,9 @@
                                                     <i class="fa fa-star"></i>
                                                 </div>
                                                 <div class="rating-progress">
-                                                    <div style="width: 80%;"></div>
+                                                    <div style="width: {{(new \App\Helpers\Helper)->getRatingStar(5,$product -> product_id)}}%;"></div>
                                                 </div>
-                                                <span class="sum">3</span>
+                                                <span class="sum">{{(new \App\Helpers\Helper)->getCountCommentByProductId(5,$product -> product_id)}}</span>
                                             </li>
                                             <li>
                                                 <div class="rating-stars">
@@ -206,9 +207,9 @@
                                                     <i class="fa fa-star-o"></i>
                                                 </div>
                                                 <div class="rating-progress">
-                                                    <div style="width: 60%;"></div>
+                                                    <div style="width: {{(new \App\Helpers\Helper)->getRatingStar(4,$product -> product_id)}}%;"></div>
                                                 </div>
-                                                <span class="sum">2</span>
+                                                <span class="sum">{{(new \App\Helpers\Helper)->getCountCommentByProductId(4,$product -> product_id)}}</span>
                                             </li>
                                             <li>
                                                 <div class="rating-stars">
@@ -219,9 +220,9 @@
                                                     <i class="fa fa-star-o"></i>
                                                 </div>
                                                 <div class="rating-progress">
-                                                    <div></div>
+                                                    <div style="width: {{(new \App\Helpers\Helper)->getRatingStar(3,$product -> product_id)}}%;"></div>
                                                 </div>
-                                                <span class="sum">0</span>
+                                                <span class="sum">{{(new \App\Helpers\Helper)->getCountCommentByProductId(3,$product -> product_id)}}</span>
                                             </li>
                                             <li>
                                                 <div class="rating-stars">
@@ -232,9 +233,9 @@
                                                     <i class="fa fa-star-o"></i>
                                                 </div>
                                                 <div class="rating-progress">
-                                                    <div></div>
+                                                    <div style="width: {{(new \App\Helpers\Helper)->getRatingStar(2,$product -> product_id)}}%;"></div>
                                                 </div>
-                                                <span class="sum">0</span>
+                                                <span class="sum">{{(new \App\Helpers\Helper)->getCountCommentByProductId(2,$product -> product_id)}}</span>
                                             </li>
                                             <li>
                                                 <div class="rating-stars">
@@ -245,9 +246,9 @@
                                                     <i class="fa fa-star-o"></i>
                                                 </div>
                                                 <div class="rating-progress">
-                                                    <div></div>
+                                                    <div style="width: {{(new \App\Helpers\Helper)->getRatingStar(1,$product -> product_id)}}"></div>
                                                 </div>
-                                                <span class="sum">0</span>
+                                                <span class="sum">{{(new \App\Helpers\Helper)->getCountCommentByProductId(1,$product -> product_id)}}</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -258,62 +259,28 @@
                                 <div class="col-md-6">
                                     <div id="reviews">
                                         <ul class="reviews">
+                                            @foreach ($product->comments as $comment)
+
                                             <li>
                                                 <div class="review-heading">
-                                                    <h5 class="name">John</h5>
-                                                    <p class="date">27 DEC 2018, 8:0 PM</p>
+                                                    <h5 class="name">{{$comment -> name}}</h5>
+                                                    <p class="date">{{$comment -> created_at}}</p>
                                                     <div class="review-rating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o empty"></i>
+                                                        @for($i = 1; $i <= 5; $i++) @if($i <=$comment -> rating )
+                                                            <i class="fa fa-star"></i>
+                                                            @else
+                                                            <i class="fa fa-star-o empty"></i>
+                                                            @endif
+                                                            @endfor
                                                     </div>
                                                 </div>
                                                 <div class="review-body">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+                                                    <p>{{$comment -> comment_content}}</p>
                                                 </div>
                                             </li>
-                                            <li>
-                                                <div class="review-heading">
-                                                    <h5 class="name">John</h5>
-                                                    <p class="date">27 DEC 2018, 8:0 PM</p>
-                                                    <div class="review-rating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o empty"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="review-body">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="review-heading">
-                                                    <h5 class="name">John</h5>
-                                                    <p class="date">27 DEC 2018, 8:0 PM</p>
-                                                    <div class="review-rating">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o empty"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="review-body">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-                                                </div>
-                                            </li>
+                                            @endforeach
                                         </ul>
-                                        <ul class="reviews-pagination">
-                                            <li class="active">1</li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">4</a></li>
-                                            <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                                        </ul>
+
                                     </div>
                                 </div>
                                 <!-- /Reviews -->
