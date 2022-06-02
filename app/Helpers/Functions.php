@@ -164,12 +164,12 @@ class Helper
         $star3 = (new \App\Helpers\Helper)->getCountCommentByProductId(3, $product_id);
         $star4 = (new \App\Helpers\Helper)->getCountCommentByProductId(4, $product_id);
         $star5 = (new \App\Helpers\Helper)->getCountCommentByProductId(5, $product_id);
-        $count_arr = count(Comment::where('product_product_id', $product_id)->get()) > 0 ? count(Comment::where('product_product_id', $product_id)->get()) : 1;
-        if ($count_arr > 0){
-            $cal = ($star1 * 1 + $star2 * 2 + $star3 * 3 + $star4 * 4 + $star5 * 5) / $count_arr;
-            return number_format($cal, 2);
+        $count_arr = count(Comment::where('product_product_id', $product_id)->get()) > 0 ? count(Comment::where('product_product_id', $product_id)->get()) : 0;
+        if ($count_arr == 0){
+            return number_format(5, 2);
         }
-        return 5;
+        $cal = ($star1 * 1 + $star2 * 2 + $star3 * 3 + $star4 * 4 + $star5 * 5) / $count_arr;
+        return number_format($cal, 2);
     }
     function getTotalStar($product_id){
         return count(Comment::where('product_product_id', $product_id)->get());

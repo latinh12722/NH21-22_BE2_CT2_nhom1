@@ -91,8 +91,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], functio
 });
 
 Route::get('/send', [MyController::class, 'sendMail'])->name('send.mail');
-Route::post('/add-to-card', [CartController::class, 'addtocart']);
-Route::get('/remove-card/{id}', [CartController::class, 'removecart']);
+Route::post('/add-to-cart', [CartController::class, 'addtocart']);
+Route::get('/remove-cart/{id}', [CartController::class, 'removecart']);
 Route::get('/view-cart',[CartController::class,'showviewcart']);
 Route::get('/add-wishlist/{product_id}',[MyController::class,'addwishlist']);
 Route::get('/remove-wishlist/{product_id}',[MyController::class,'removewishlist']);

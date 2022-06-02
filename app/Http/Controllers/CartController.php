@@ -23,18 +23,14 @@ class CartController extends Controller
         }
         return redirect()->back();
     }
-    public function removecart(Request $request){
-        $id = $request->id;
+    public function removecart($id){
         Cart::remove($id);
         return redirect()->back();
-    }
-    function output_quantity_cart(){
-        
     }
     function showviewcart(){
         if (Cart::getTotalQuantity()){
             return view('customer.viewcart');
         }
-        return redirect()->back();
+        return redirect()->route('customer.index');
     }
 }

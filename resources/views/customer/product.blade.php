@@ -80,13 +80,14 @@
                     <h2 class="product-name"> {{$product->product_name}}</h2>
                     <div>
                         <div class="product-rating">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o"></i>
+                            @for($i=1;$i<=5;$i++) @if($i<=(new \App\Helpers\Helper)->rating_percentage($product->product_id))
+                                <i class="fa fa-star"></i>
+                                @else
+                                <i class="fa fa-star-o"></i>
+                                @endif
+                                @endfor
                         </div>
-                        <a class="review-link" href="#">10 Review(s) | Add your review</a>
+
                     </div>
                     <div>
                         <h3 class="product-price">{{number_format($product->product_price-$product->product_price*$product->product_sale/100)}}đ
@@ -96,7 +97,7 @@
                     </div>
                     <p>{{substr($product->product_description,0,100)."..."}}</p>
 
-                    <form action="{{ url('add-to-card') }}" method="POST">
+                    <form action="{{ url('add-to-cart') }}" method="POST">
                         @csrf
                         <div class="add-to-cart">
                             <div class="qty-label">
@@ -368,7 +369,7 @@
                         </div>
                     </div>
                     <div class="add-to-cart">
-                        <form action="{{ url('add-to-card') }}" method="POST">
+                        <form action="{{ url('add-to-cart') }}" method="POST">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $value->product_id }}">
                             <input type="hidden" name="quantity" value="1">

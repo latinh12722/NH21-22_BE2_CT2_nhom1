@@ -178,7 +178,7 @@
                                                 <h3 class="product-name"><a href="{{url('product/'.$product->product_id)}}">{{$product->product_name}}</a></h3>
                                                 <h4 class="product-price"><span class="qty">{{$card->quantity}}x</span>{{number_format($product->product_price-$product->product_price*$product->product_sale/100)}}đ</h4>
                                             </div>
-                                            <form action="{{url('/remove-wishlist/'.$product->product_id)}}">
+                                            <form action="{{url('/remove-cart/'.$product->product_id)}}">
                                                 <button class="delete"><i class="fa fa-close"></i></button>
                                             </form>
                                         </div>
@@ -391,7 +391,7 @@
                 </div>
                 <p id="modal-description">123</p>
 
-                <form action="{{ url('add-to-card') }}" method="POST">
+                <form action="{{ url('add-to-cart') }}" method="POST">
                     @csrf
                     <div class="add-to-cart">
                         <div class="qty-label">

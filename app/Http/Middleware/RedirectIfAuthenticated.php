@@ -27,7 +27,7 @@ class RedirectIfAuthenticated
             if (Auth::guard($guard)->check() && Auth::user()->role == 1) {
                 return redirect()->route('admin');
             } elseif (Auth::guard($guard)->check() && Auth::user()->role == 0) {
-                return redirect()->route('index');
+                return redirect()->route('customer.index');
             }
         }
 

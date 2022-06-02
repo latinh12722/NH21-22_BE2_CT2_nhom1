@@ -27,29 +27,31 @@
         @foreach(\Gloudemans\Shoppingcart\Facades\Cart::getContent() as $key => $cart)
         @php $product = (new \App\Helpers\Helper)->getproductbyid($cart->id) @endphp
 
-        <form id="form{{$key}}" action="" method="post">
-            <div class="row tb" style="padding-top: 7px;">
-                <div class="col-md-2 col-xs-6 ">
-                    <img src="{{asset('img/'.$product->product_image)}}" width="100px" height="100px">
-                </div>
-                <div class="col-md-3 col-xs-6 ">
-                {{$product->product_name}}
-                </div>
-                <div class="col-md-2 col-xs-6 ">
-                {{number_format($product->product_price-$product->product_price*$product->product_sale/100)}}đ
-                </div>
-                <div class="col-md-2 col-xs-6">
-                    <div style="width: 100px;">
-                        <input type="hidden" name="id" value="{{$product->product_id}}">
-                        <input name="soluong" data-urladd="" data-quantity="{{$cart->quantity}}" value="{{$cart->quantity}}" type="number" style="width: 100%;" placeholder="number" id="numPeople" />
-                    </div>
-                </div>
-                <div style="margin-left: -10px;" class="col-md-2 col-xs-6 cart-btns1">
-                    <a href="{{$product->product_id}}">Delete</a>
-                </div>
+        <div class="row tb" style="padding-top: 7px;">
+            <div class="col-md-2 col-xs-6 ">
+                <img src="{{asset('img/'.$product->product_image)}}" width="100px" height="100px">
             </div>
-            <!-- /row -->
-        </form>
+            <div class="col-md-3 col-xs-6 ">
+                {{$product->product_name}}
+            </div>
+            <div class="col-md-2 col-xs-6 ">
+                {{number_format($product->product_price-$product->product_price*$product->product_sale/100)}}đ
+            </div>
+            <div class="col-md-2 col-xs-6">
+                <form id="addcart" action="{{ url('add-to-cart') }}" method="post">
+                    @csrf
+                    <div style="width: 100px;">
+                        <input type="hidden" name="product_id" value="{{$product->product_id}}">
+                        <input id="quantity_add" type="hidden" name="quantity" value="1">
+                        <input name="soluong" data-urlremove="{{url('remove-cart/'.$product->product_id)}}" data-quantityold="{{$cart->quantity}}" value="{{$cart->quantity}}" type="number" style="width: 100%;" placeholder="number" id="input_quantity" />
+                    </div>
+                </form>
+            </div>
+            <div style="margin-left: -10px;" class="col-md-2 col-xs-6 cart-btns1">
+                <a href="{{$product->product_id}}">Delete</a>
+            </div>
+        </div>
+        <!-- /row -->
         @endforeach
         <div class="row tb tt">
             <div class="col-md-5 col-xs-6"></div>
@@ -62,5 +64,22 @@
     <!-- /container -->
 </div>
 <!-- /SECTION -->
+<script>
+    const input_quantity = document.querySelector('#input_quantity');
+    input_quantity.addEventListener('change', function() {
+        if (input_quantity.value == 0) {
+            window.location = input_quantity.dataset.urlremove;
+            console.log(input_quantity.dataset.urlremove);
+        }
+        if (input_quantity.dataset.quantityold > input_quantity.value) {
+            document.querySelector('#quantity_add').value = -1;
+            document.querySelector('#addcart').submit();
+        }
+        if (input_quantity.dataset.quantityold < input_quantity.value) {
+            document.querySelector('#quantity_add').value = 1;
+            document.querySelector('#addcart').submit();
+        }
 
+    });
+</script>
 @endsection

@@ -172,7 +172,7 @@
                                     <button data-url="{{ url('/api/product/show') }}" data-product-id="{{$value->product_id}}" id="btnshowmodal" class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
                                 </div>
                             </div>
-                            <form action="{{ url('add-to-card') }}" method="POST">
+                            <form action="{{ url('add-to-cart') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $value->product_id }}">
                                 <input type="hidden" name="quantity" value="1">

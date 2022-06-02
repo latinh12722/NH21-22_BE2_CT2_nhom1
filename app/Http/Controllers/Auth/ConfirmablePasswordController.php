@@ -43,7 +43,7 @@ class ConfirmablePasswordController extends Controller
         if (Auth::user()->role == 1){
             return redirect()->intended(RouteServiceProvider::ADMIN);
         }else{
-            return redirect()->intended(RouteServiceProvider::INDEX);
+            return redirect()->intended(RouteServiceProvider::HOME);
         }
     }
 }
