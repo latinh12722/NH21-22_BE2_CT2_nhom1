@@ -15,6 +15,10 @@ class Bill extends Model
     function products(){
         return $this->belongsToMany(Product::class);
     }
+
+
+
+    
     function bill_products(){
         return $this->hasMany(bill_product::class,'bill_id');
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bill;
 use App\Models\Manufacture;
 use App\Models\Product;
 use App\Models\Protype;
@@ -187,8 +188,15 @@ class AdminController extends Controller
 
     function show_bills()
     {
-        $manufactures = Manufacture::all();
-        return view('admin.bills', ['data' => $manufactures]);
+        $bills = Bill::all();
+        return view('admin.bills', ['data' => $bills]);
+    }
+    function billbyid($id){
+        if(count(Bill::where('id',$id)->get()) == 1){
+            $bill = Bill::find($id);
+            return view('admin.billdetail', ['bill' => $bill]);
+        }
+        return view('');
     }
     function show_edit_bill($id)
     {

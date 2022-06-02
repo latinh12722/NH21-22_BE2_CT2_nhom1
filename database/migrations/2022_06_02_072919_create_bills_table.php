@@ -21,6 +21,7 @@ class CreateBillsTable extends Migration
             $table->string('address');
             $table->string('phone');
             $table->string('order_note');
+            $table->integer('confirm')->default('0');
             $table->timestamps();
         });
     }

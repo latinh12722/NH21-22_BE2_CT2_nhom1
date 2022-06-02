@@ -80,6 +80,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], functio
         Route::post('/edit-manufacture', [AdminController::class, 'edit_manufacture']);
         Route::get('/delete-manufacture', [AdminController::class, 'delete_manufacture']);
     });
+    Route::prefix('bills')->group(function () {
+        Route::get('', [AdminController::class, 'show_bills']);
+        Route::get('/{id}', [AdminController::class, 'billbyid']);
+    });
 });
 
 Route::get('/send', [MyController::class, 'sendMail'])->name('send.mail');
