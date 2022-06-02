@@ -15,32 +15,37 @@ class Store extends Controller
         $data['products'] = Product::where('manu_id', $manu_id)->Paginate(9);
         return view('customer.store', $data);
     }
-    function show_typeid($type_id,Request $request)
+    function show_typeid($type_id, Request $request)
     {
         $data['products'] = Product::where('type_id', $type_id);
         if (count(Protype::where('type_id', $type_id)->get()) > 0) {
-            if($request->get('orderby') == 'new'){
+            if ($request->get('orderby') == 'new') {
                 $data['products'] = $data['products']->orderBy('product_id', 'ASC');
                 $data['products'] = $data['products']->orderBy('product_feature', 'DESC');
             }
-            if($request->get('orderby') == 'sale'){
+            if ($request->get('orderby') == 'sale') {
                 $data['products'] = $data['products']->orderBy('product_sale', 'DESC');
             }
-            if($request->get('orderby') == 'price_max'){
+            if ($request->get('orderby') == 'price_max') {
                 $data['products'] = $data['products']->orderBy('product_price', 'DESC');
             }
-            if($request->get('orderby') == 'price_min'){
+            if ($request->get('orderby') == 'price_min') {
                 $data['products'] = $data['products']->orderBy('product_price', 'ASC');
             }
-            if($request->get('brand')){
+            if ($request->get('brand')) {
                 $data['products'] = $data['products']->where('manu_id', $request->get('brand'));
             }
-            if($request->get('category')){
+            if ($request->get('category')) {
                 $data['products'] = $data['products']->where('type_id', $request->get('category'));
+            }
+            if ($request->get('price_max')) {
+                $data['products'] = $data['products']->where('product_price', '<', $request->get('price_max'));
+            }
+            if ($request->get('price_min')) {
+                $data['products'] = $data['products']->where('product_price', '>', $request->get('price_min'));
             }
             $data['products'] = $data['products']->Paginate(9);
             return view('customer.store', $data);
-
         }
         return view('errors.illustrated-layout');
     }
@@ -78,10 +83,10 @@ class Store extends Controller
     public function search(Request $request)
     {
         $keyword = $request->input('keyword');
-        $data['products'] = Product::where([['product_name', 'LIKE', "%{$keyword}%"],['product_description', 'LIKE', "%{$keyword}%"]]);
+        $data['products'] = Product::where([['product_name', 'LIKE', "%{$keyword}%"], ['product_description', 'LIKE', "%{$keyword}%"]]);
         if ($request->input('type_id')) {
             $type_id = $request->input('type_id');
-            if($type_id!=-1){
+            if ($type_id != -1) {
                 $data['products'] = $data['products']->where('type_id', $type_id);
             }
         }

@@ -2228,3 +2228,21 @@ textarea.input {
   text-decoration: none;
   cursor: pointer;
 }
+
+
+.tb {
+  border: 1px solid black;
+}
+
+.cart-btns1>a {
+  display: inline-block;
+  width: calc(70% - 0px);
+  padding: 12px;
+  background-color: #D10024;
+  color: #FFF;
+  text-align: center;
+  font-weight: 700;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+  border-radius: 25px;
+}

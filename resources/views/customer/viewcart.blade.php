@@ -24,8 +24,8 @@
                 Thao tác
             </div>
         </div>
-        @foreach(\Gloudemans\Shoppingcart\Facades\Cart::getContent() as $key => $card)
-        @php $product = (new \App\Helpers\Helper)->getproductbyid($card->id) @endphp
+        @foreach(\Gloudemans\Shoppingcart\Facades\Cart::getContent() as $key => $cart)
+        @php $product = (new \App\Helpers\Helper)->getproductbyid($cart->id) @endphp
 
         <form id="form{{$key}}" action="" method="post">
             <div class="row tb" style="padding-top: 7px;">
@@ -41,7 +41,7 @@
                 <div class="col-md-2 col-xs-6">
                     <div style="width: 100px;">
                         <input type="hidden" name="id" value="{{$product->product_id}}">
-                        <input name="soluong" data-urladd="" data-quantity="{{$card->quantity}}" value="{{$card->quantity}}" type="number" style="width: 100%;" placeholder="number" id="numPeople" />
+                        <input name="soluong" data-urladd="" data-quantity="{{$cart->quantity}}" value="{{$cart->quantity}}" type="number" style="width: 100%;" placeholder="number" id="numPeople" />
                     </div>
                 </div>
                 <div style="margin-left: -10px;" class="col-md-2 col-xs-6 cart-btns1">

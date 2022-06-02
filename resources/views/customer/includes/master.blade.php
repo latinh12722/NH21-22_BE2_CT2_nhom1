@@ -40,7 +40,9 @@
 
 <body>
     <!-- HEADER -->
-
+    @if($errors->any())
+    <h4>{{$errors->first()}}</h4>
+    @endif
     <header>
         <!-- TOP HEADER -->
         <div id="top-header">
@@ -61,7 +63,7 @@
                     <li><a href="{{ url('admin') }}"><i class="fa fa-user-o"></i>Admin</a></li>
                     @else
 
-                    <li><a href="#"><i class="fa fa-shopping-cart"></i>Bill</a></li>
+                    <li><a href="{{url('bill/bought')}}"><i class="fa fa-shopping-cart"></i>Bill</a></li>
                     <li><a href="#"><i class="fa fa-user-o"></i>{{strtoupper(Auth::user()->name)}}</a></li>
                     @endif
                     <!-- <li><a href="{{url('login')}}"><i class="fa fa-user-o"></i> My Account</a></li> -->
@@ -419,7 +421,6 @@
     <script src="{{asset('js/main.js')}}"></script>
     <script src="{{asset('js/ajax.js')}}"></script>
     <script>
-        console.log(123);
         const arrayaddwishlist = document.querySelectorAll('#addwishlist');
         arrayaddwishlist.forEach(element => {
             element.addEventListener('click', function() {

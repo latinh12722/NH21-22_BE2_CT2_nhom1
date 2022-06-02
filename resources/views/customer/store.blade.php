@@ -54,20 +54,19 @@
                         <div class="price-filter">
                             <div id="price-slider"></div>
                             <div class="input-number price-min">
-                                <input value="0" id="price-min" type="number">
+                                <input name="price_min" onchange="price()" id="price-min" type="number">
                                 <span class="qty-up">+</span>
                                 <span class="qty-down">-</span>
                             </div>
                             <span>-</span>
                             <div class="input-number price-max">
-                                <input value="100000000" id="price-max" type="number">
+                                <input name="price_max" onchange="price()" id="price-max" type="number">
                                 <span class="qty-up">+</span>
                                 <span class="qty-down">-</span>
                             </div>
                         </div>
                     </div>
                     <!-- /aside Widget -->
-
                     <!-- aside Widget -->
                     <div class="aside">
                         <h3 class="aside-title">Brand</h3>

@@ -26,7 +26,11 @@ class Product extends Model
     {
         return $this->hasMany(Comment::class);
     }
-    function bills(){
+    function bill(){
         return $this->belongsToMany(Bills::class);
+    }
+    
+    function bill_products(){
+        return $this->hasMany(bill_product::class);
     }
 }

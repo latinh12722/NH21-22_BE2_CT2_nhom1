@@ -46,6 +46,9 @@ Route::prefix('product')->group(function () {
 });
 Route::prefix('bill')->group(function () {
     Route::get('/', [BillController::class, 'index']);
+    Route::get('/bought', [BillController::class, 'bought'])->name('bill.bought');
+    Route::get('/bought/{bill_id}', [BillController::class, 'bought_bill_id']);
+    Route::post('/add', [BillController::class, 'addbill']);
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['isAdmin', 'auth']], function () {
