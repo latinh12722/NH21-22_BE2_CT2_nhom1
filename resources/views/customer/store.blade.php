@@ -30,14 +30,14 @@
             <!-- ASIDE -->
             <div id="aside" class="col-md-3">
                 <!-- aside Widget -->
-                <form action="" method="get">
+                <form id="locpro" action="{{Request::fullUrl()}}" method="get">
                     <div class="aside">
                         <h3 class="aside-title">Categories</h3>
                         <div class="checkbox-filter">
                             @foreach((new \App\Helpers\Helper)->getselectarr_type($products) as $key=>$value)
                             <div class="input-checkbox">
-                                <input type="checkbox" id="category-1">
-                                <label for="category-1">
+                                <input {{Request::input('category') == $key ? "checked" : ""}} value="{{$key}}" name="category" type="checkbox" id="category-{{$key}}">
+                                <label for="category-{{$key}}">
                                     <span></span>
                                     {{(new \App\Helpers\Helper)->gettype_byid($key)->type_name}}
                                     <small>({{$value}})</small>
@@ -54,13 +54,13 @@
                         <div class="price-filter">
                             <div id="price-slider"></div>
                             <div class="input-number price-min">
-                                <input id="price-min" type="number">
+                                <input value="0" id="price-min" type="number">
                                 <span class="qty-up">+</span>
                                 <span class="qty-down">-</span>
                             </div>
                             <span>-</span>
                             <div class="input-number price-max">
-                                <input id="price-max" type="number">
+                                <input value="100000000" id="price-max" type="number">
                                 <span class="qty-up">+</span>
                                 <span class="qty-down">-</span>
                             </div>
@@ -74,8 +74,8 @@
                         <div class="checkbox-filter">
                             @foreach((new \App\Helpers\Helper)->getselectarr_manu($products) as $key => $value)
                             <div class="input-checkbox">
-                                <input type="checkbox" id="brand-1">
-                                <label for="brand-1">
+                                <input {{Request::input('brand') == $key ? "checked" : ""}} value="{{$key}}" name="brand" type="checkbox" id="brand-{{$key}}">
+                                <label for="brand-{{$key}}">
                                     <span></span>
                                     {{(new \App\Helpers\Helper)->getmanu_byid($key)->manu_name}}
                                     <small>({{$value}})</small>
@@ -118,14 +118,15 @@
                 <!-- store top filter -->
                 <div class="store-filter clearfix">
                     <div class="store-sort">
-                        <form id="form_order" method="get">
+                        <form action="{{request()->fullUrl()}}" id="form_order" method="get">
                             <label>
                                 Sort By:
-                                <select id="orderby" class="input-select">
-                                    <option value="new">New</option>
-                                    <option value="sale">Sale</option>
-                                    <option value="price_max">Price ascending</option>
-                                    <option value="price_min">Price descending</option>
+                                <select name="orderby" id="orderby" class="input-select">
+                                    <option {{ Request::input("orderby") == "none" ? "selected" : "" }} value="{{request()->fullUrlWithQuery(['orderby' => 'none'])}}">None</option>
+                                    <option {{ Request::input("orderby") == "new" ? "selected" : "" }} value="{{request()->fullUrlWithQuery(['orderby' => 'new'])}}">New</option>
+                                    <option {{ Request::input("orderby") == "sale" ? "selected" : "" }} value="{{request()->fullUrlWithQuery(['orderby' => 'sale'])}}">Sale</option>
+                                    <option {{ Request::input("orderby") == "price_max" ? "selected" : "" }} value="{{request()->fullUrlWithQuery(['orderby' => 'price_max'])}}">Price ascending</option>
+                                    <option {{ Request::input("orderby") == "price_min" ? "selected" : "" }} value="{{request()->fullUrlWithQuery(['orderby' => 'price_min'])}}">Price descending</option>
                                 </select>
                             </label>
                         </form>
@@ -155,7 +156,7 @@
                             </div>
                             <div class="product-body">
                                 <p class="product-category">{{ $value->manufacture->manu_name}}</p>
-                                <h3 class="product-name" style="height: 40px;"><a href="{{url('product/'.$value->product_id)}}">{{$value->product_name}}</a></h3>
+                                <h3 class="product-name" style="height: 40px;"><a href="{{url('product/'.$value->product_id)}}">{{(new \App\Helpers\Helper)->substring_name($value->product_name)}}</a></h3>
                                 <h4 class="product-price">{{number_format($value->product_price-$value->product_price*$value->product_sale/100)}}đ
                                     <del class="product-old-price">{{number_format($value->product_price)}}đ</del>
                                 </h4>
@@ -204,22 +205,26 @@
     </div>
     <!-- /container -->
 </div>
-<!-- /SECTION -->
 <script>
-    const price_min = document.querySelector('#price-min');
-    const price_max = document.querySelector('#price_max');
-    price_max.addEventListener('change', () => {
-        console.log(price_max.value);
+    const order = document.querySelector('#orderby');
+    order.addEventListener('change', () => {
+        window.location = order.value
     });
 
-    price_min.addEventListener('change', () => {
-        console.log(price_min.value);
-    })
-
-    $(function() {
-        $('#orderby').change(function() {
-            $('#form_order').submit();
-        })
-    })
+    const arr_categories = document.querySelectorAll('input[name=category]');
+    const arr_brand = document.querySelectorAll('input[name=brand]');
+    arr_categories.forEach(element => {
+        element.addEventListener('change', function () {
+            document.querySelector('#locpro').submit();
+        });
+    });
+    arr_brand.forEach(element => {
+        element.addEventListener('change', function () {
+            document.querySelector('#locpro').submit();
+        });
+    });
+    function price() {
+        document.querySelector('#locpro').submit();
+    }
 </script>
 @endsection

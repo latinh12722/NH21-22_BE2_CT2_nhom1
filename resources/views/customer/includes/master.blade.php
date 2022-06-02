@@ -419,12 +419,18 @@
     <script src="{{asset('js/main.js')}}"></script>
     <script src="{{asset('js/ajax.js')}}"></script>
     <script>
+        console.log(123);
         const arrayaddwishlist = document.querySelectorAll('#addwishlist');
         arrayaddwishlist.forEach(element => {
             element.addEventListener('click', function() {
                 window.location = element.dataset.url;
 
             });
+        });
+
+        const order = document.querySelector('#orderby');
+        order.addEventListener('change', () => {
+            document.querySelector('#form_order').submit();
         });
     </script>
 </body>

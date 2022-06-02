@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Protype;
 use App\Models\Wishlists;
 use Illuminate\Support\Facades\Auth;
+use PDO;
 
 class Helper
 {
@@ -136,5 +137,11 @@ class Helper
             }
         }
         return 'fa fa-heart-o';
+    }
+    function substring_name($name){
+        if (strlen($name) > 100){
+            return substr($name,0,50)."...";
+        }
+        return $name;
     }
 }
