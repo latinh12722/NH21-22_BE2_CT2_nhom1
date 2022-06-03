@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bill;
+use App\Models\bill_product;
 use App\Models\Comment;
 use App\Models\Manufacture;
 use App\Models\Product;
@@ -255,6 +256,7 @@ class AdminController extends Controller
     }
     function remove_bill($id)
     {
+        bill_product::where('bill_id', $id)->delete();
         Bill::where('id', $id)->delete();
         return redirect()->route('admin.bills')->with('status', 'Delete database successful.');
     }

@@ -49,6 +49,7 @@ class BillController extends Controller
             foreach (Cart::getContent() as $cart){
                 $bill->products()->attach($cart->id,['quantity'=>$cart->quantity]);
             }
+            Cart::clear();
             return Redirect::route('customer.index');
         }
     }
