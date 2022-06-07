@@ -30,7 +30,12 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Protypes {{count($data)}}</h3>
+            <div class="card-title">
+                    <a href="{{url('admin/protypes/add')}}" type="button" class="btn btn-primary">
+                        Add Protype
+                    </a>
+                    ( {{count($data)}} )
+                </div>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
