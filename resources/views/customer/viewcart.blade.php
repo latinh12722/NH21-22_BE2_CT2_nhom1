@@ -57,7 +57,7 @@
             <div class="col-md-5 col-xs-6"></div>
             <h4 class="col-md-2 col-xs-6" style="vertical-align: text-bottom;">Tổng Tiền:</h4>
             <div class="col-md-2 col-xs-6" style="font-size: 18px;font-weight:bold">{{number_format((new \App\Helpers\Helper)->total_arraycard())}} đ</div>
-            <div class="col-md-2 col-xs-6 cart-btns1" style="margin-left: -10px;"> <a href="checkout.php">Checkout <i class="fa fa-arrow-circle-right"></i></a>
+            <div class="col-md-2 col-xs-6 cart-btns1" style="margin-left: -10px;"> <a href="{{url('bill/')}}">Checkout <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
     </div>

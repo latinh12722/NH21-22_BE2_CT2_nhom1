@@ -22,11 +22,8 @@ class MyController extends Controller
      */
     public function index()
     {
-        // $products = Product::all();
-        // return view('customer.index', ['data' => $products]);
         $newproducts = Product::where('product_feature', 1)->orderBy('product_id', 'DESC')->take(10)->get();
         $topselling = Product::orderBy('product_sale', 'DESC')->take(8)->get();
-        // $Allprotypes = Protype::orderBy('protype_', 'DESC')->take(8)->get();
         return view('customer.index', ['newproducts' => $newproducts, 'topselling' => $topselling]);
     }
     function getAllproducts()

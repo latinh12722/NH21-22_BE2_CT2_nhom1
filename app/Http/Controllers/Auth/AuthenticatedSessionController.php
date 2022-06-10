@@ -53,8 +53,8 @@ class AuthenticatedSessionController extends Controller
             }
         } else {
             return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors([
-        'approve' => 'Wrong password or this account not approved yet.',
-    ]);
+                'approve' => 'Wrong password or this account not approved yet.',
+            ]);
         }
     }
     public function store(LoginRequest $request)

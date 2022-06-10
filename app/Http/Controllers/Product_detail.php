@@ -46,13 +46,10 @@ class Product_detail extends Controller
      */
     public function show($id)
     {
-        // $products = new Product;
         $product = Product::where('product_id',$id)->get();
-        // $product = DB::select('SELECT * FROM products where product_id = ?',[$id]);
         if (count($product) > 0) {
             return view('customer.product',['product'=>$product[0]]);
         }
-        // return view('errors.illustrated-layout');
     }
 
     /**
